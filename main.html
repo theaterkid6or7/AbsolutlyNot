@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Absolutely Not</title>
+
+  <style>
+    :root {
+      --bg: #0b0614;
+      --card: #161027;
+      --accent: #9b87ff;
+      --text: #f4f2ff;
+      --muted: #b7b0ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #1c1233, var(--bg) 70%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 1100px;
+      padding: clamp(16px, 4vw, 48px);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      margin-bottom: 1rem;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #1f1740, var(--card));
+      border: 1px solid rgba(155,135,255,0.4);
+      border-radius: 18px;
+      padding: clamp(16px, 3vw, 32px);
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 0 40px rgba(155,135,255,0.15);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      font-size: 1rem;
+      background: var(--accent);
+      color: #0b0614;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    button:hover { background: #b3a3ff; }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    .hidden { display: none; }
+
+    .fade-reveal {
+      animation: reveal 1s ease forwards;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #points {
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: gold;
+      margin-top: 20px;
+      animation: points 2s ease-out forwards;
+    }
+
+    @keyframes points {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <h1>Absolutely Not</h1>
+
+  <!-- JOIN -->
+  <div id="join" class="card">
+    <h2>Enter Your Name</h2>
+    <input id="nameInput" placeholder="Your name" />
+    <button onclick="joinGame()">Join Game</button>
+  </div>
+
+  <!-- HOST SCREEN -->
+  <div id="host" class="hidden">
+    <div class="card">
+      <h2>Setup</h2>
+      <div id="setup"></div>
+    </div>
+    <div class="card">
+      <h2>Escalation</h2>
+      <div id="escalation">???</div>
+    </div>
+    <div id="points" class="hidden">+10 HOUSE POINTS</div>
+  </div>
+
+  <!-- PLAYER SCREEN -->
+  <div id="player" class="hidden">
+    <div class="card">
+      <h2 id="roleLabel"></h2>
+      <div id="content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ================= DATA ================= */
+  const setups = [
+    'A mandatory school assembly',
+    'A charity campaign',
+    'A children’s reboot',
+    'Your boss opens the meeting with:'
+  ];
+
+  const escalations = [
+    '—and HR approved it',
+    '—right after a tragedy',
+    '—sponsored by a corporation',
+    '—and it becomes policy',
+    '—everyone claps anyway'
+  ];
+
+  const playerCards = [
+    'This gets a Netflix documentary',
+    'Someone apologizes on Twitter',
+    'It wins an award',
+    'Congress pretends to care'
+  ];
+
+  /* ================= STATE ================= */
+  const channel = new BroadcastChannel('absolutely-not');
+  let playerName = '';
+  let players = [];
+  let judgeIndex = 0;
+  let chosenEscalation = null;
+  let submissions = [];
+
+  /* ================= JOIN ================= */
+  function joinGame() {
+    playerName = document.getElementById('nameInput').value.trim();
+    if (!playerName) return;
+
+    document.getElementById('join').classList.add('hidden');
+    document.getElementById('player').classList.remove('hidden');
+
+    channel.postMessage({ type: 'join', name: playerName });
+  }
+
+  /* ================= CHANNEL ================= */
+  channel.onmessage = e => {
+    const msg = e.data;
+
+    if (msg.type === 'join') {
+      if (!players.includes(msg.name)) players.push(msg.name);
+      updateRoles();
+    }
+
+    if (msg.type === 'escalation-chosen') {
+      chosenEscalation = msg.text;
+      document.getElementById('escalation').innerText = msg.text;
+      document.getElementById('escalation').classList.add('fade-reveal');
+    }
+
+    if (msg.type === 'submit') {
+      submissions.push(msg.card);
+      updateJudgeView();
+    }
+
+    if (msg.type === 'winner') {
+      document.getElementById('points').classList.remove('hidden');
+      setTimeout(() => document.getElementById('points').classList.add('hidden'), 3000);
+      nextJudge();
+    }
+  };
+
+  /* ================= GAME FLOW ================= */
+  function updateRoles() {
+    const me = players.indexOf(playerName);
+    const isJudge = me === judgeIndex;
+
+    document.getElementById('roleLabel').innerText = isJudge
+      ? 'You are the Judge'
+      : 'Submit a Card';
+
+    if (isJudge) showEscalations();
+    else showPlayerCards();
+
+    // host auto = first tab
+    if (players.length && players[0] === playerName) initHost();
+  }
+
+  function initHost() {
+    document.getElementById('host').classList.remove('hidden');
+    document.getElementById('setup').innerText = setups[Math.floor(Math.random()*setups.length)];
+  }
+
+  function showEscalations() {
+    const c = document.getElementById('content');
+    c.innerHTML = '';
+
+    shuffle(escalations).slice(0,3).forEach(text => {
+      const b = document.createElement('button');
+      b.innerText = 'Face‑Down Card';
+      b.onclick = () => channel.postMessage({ type:'escalation-chosen', text });
+      c.appendChild(b);
+    });
+  }
+
+  function showPlayerCards() {
+    const c = document.getElementById('content');
+    c.innerHTML = '';
+
+    playerCards.forEach(card => {
+      const b = document.createElement('button');
+      b.innerText = card;
+      b.onclick = () => channel.postMessage({ type:'submit', card });
+      c.appendChild(b);
+    });
+  }
+
+  function updateJudgeView() {
+    if (players[judgeIndex] !== playerName) return;
+    const c = document.getElementById('content');
+
+    submissions.forEach(card => {
+      const b = document.createElement('button');
+      b.innerText = card;
+      b.onclick = () => channel.postMessage({ type:'winner' });
+      c.appendChild(b);
+    });
+  }
+
+  function nextJudge() {
+    submissions = [];
+    chosenEscalation = null;
+    judgeIndex = (judgeIndex + 1) % players.length;
+    updateRoles();
+  }
+
+  function shuffle(arr) {
+    return [...arr].sort(() => Math.random() - 0.5);
+  }
+</script>
+
+</body>
+</html>
