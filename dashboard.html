@@ -1,111 +1,439 @@
-<!-- ===================== dashboard.html ===================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Absolutely Not — Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absolutely Not - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
 
-  <style>
-    :root{
-      --bg:#05030a;
-      --panel:#120b22;
-      --accent:#8b7bff;
-      --gold:#ffd36b;
-      --text:#f5f3ff;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;min-height:100vh;
-      background:radial-gradient(circle at top,#221a55,var(--bg) 65%);
-      color:var(--text);
-      font-family:'Inter',sans-serif;
-    }
-    .dashboard{
-      max-width:1600px;margin:0 auto;padding:32px;
-      display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;gap:24px;
-    }
-    header{grid-column:1/-1;text-align:center}
-    header h1{
-      font-family:'Cinzel',serif;font-size:clamp(2.5rem,5vw,4.5rem);
-      letter-spacing:5px;margin:0;text-shadow:0 0 30px rgba(139,123,255,.6)
-    }
-    .panel{
-      background:linear-gradient(180deg,#1e1550,var(--panel));
-      border:1px solid rgba(139,123,255,.4);
-      border-radius:24px;padding:32px;box-shadow:0 0 60px rgba(0,0,0,.6)
-    }
-    .panel h2{
-      font-family:'Cinzel',serif;letter-spacing:3px;text-align:center;margin:0
-    }
-    .content{
-      margin-top:28px;text-align:center;
-      font-size:clamp(1.6rem,3vw,2.6rem)
-    }
-    #escalation.hidden{filter:blur(14px);opacity:.35}
-    .winner{
-      grid-column:1/-1;text-align:center;
-      font-family:'Cinzel',serif;
-      font-size:clamp(2.5rem,6vw,4.5rem);
-      color:var(--gold);letter-spacing:4px;
-      opacity:0;animation:points 3s ease forwards
-    }
-    @keyframes points{
-      0%{opacity:0;transform:scale(.6)}
-      35%{opacity:1;transform:scale(1.1)}
-      80%{opacity:1}
-      100%{opacity:0;transform:scale(1)}
-    }
-    footer{grid-column:1/-1;display:flex;justify-content:space-between;opacity:.5}
-  </style>
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 2em;
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+        }
+
+        .judge-info {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .cards-display {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            border-radius: 15px;
+            padding: 30px;
+            width: 280px;
+            min-height: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.2em;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-type {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 0.7em;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .catalyst {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .catalyst .card-type {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .booster {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .booster .card-type {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .fuck-no {
+            background: #2d3436;
+            color: white;
+            border: 3px solid #e74c3c;
+        }
+
+        .fuck-no .card-type {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .fuck-no-submissions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .scoreboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .house {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .house-gryffindor {
+            background: linear-gradient(135deg, #740001 0%, #ae0001 100%);
+        }
+
+        .house-slytherin {
+            background: linear-gradient(135deg, #1a472a 0%, #2a623d 100%);
+        }
+
+        .house-ravenclaw {
+            background: linear-gradient(135deg, #0e1a40 0%, #222f5b 100%);
+        }
+
+        .house-hufflepuff {
+            background: linear-gradient(135deg, #ecb939 0%, #f0c75e 100%);
+            color: #000;
+        }
+
+        .player-name {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .player-score {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .winner-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="dashboard">
-    <header><h1>Absolutely Not</h1></header>
+    <div class="header">
+        <h1>ABSOLUTELY NOT</h1>
+        <div class="game-code" id="gameCode">XXXX</div>
+        <div>Players can join at this code!</div>
+    </div>
 
-    <section class="panel">
-      <h2>SETUP</h2>
-      <div id="setup" class="content">Waiting for players…</div>
-    </section>
+    <div id="waitingRoom">
+        <h2 style="text-align: center; margin: 40px 0;">Waiting for Players...</h2>
+        <div class="scoreboard" id="playerList"></div>
+        <button class="start-btn" onclick="startGame()">Start Game</button>
+    </div>
 
-    <section class="panel">
-      <h2>ESCALATION</h2>
-      <div id="escalation" class="content hidden">???</div>
-    </section>
+    <div id="gamePlay" class="hidden">
+        <div class="judge-info" id="judgeInfo">
+            👑 Judge: <span id="currentJudge">Player 1</span>
+        </div>
 
-    <div id="winner" class="winner">PLAYER +1 POINT</div>
+        <div id="winnerBanner" class="winner-banner hidden">
+            🎉 <span id="winnerName"></span> WINS THIS ROUND! 🎉
+        </div>
 
-    <footer>
-      <div>DASHBOARD</div>
-      <div>CONNECTED</div>
-    </footer>
-  </div>
+        <div class="cards-display">
+            <div class="card catalyst" id="catalystCard">
+                <div class="card-type">Catalyst</div>
+                <div id="catalystText">A school mental health meeting</div>
+            </div>
+            
+            <div class="card booster hidden" id="boosterCard">
+                <div class="card-type">Booster</div>
+                <div id="boosterText">Click to reveal</div>
+            </div>
+        </div>
 
-  <script>
-    const channel = new BroadcastChannel('absolutely-not');
-    const setupEl = document.getElementById('setup');
-    const escalationEl = document.getElementById('escalation');
-    const winnerEl = document.getElementById('winner');
+        <div class="fuck-no-submissions" id="fuckNoCards"></div>
 
-    channel.onmessage = e => {
-      const m = e.data;
-      if(m.type==='setup') setupEl.textContent=m.text;
-      if(m.type==='hideEscalation'){
-        escalationEl.textContent='???';
-        escalationEl.classList.add('hidden');
-      }
-      if(m.type==='revealEscalation'){
-        escalationEl.textContent=m.text;
-        escalationEl.classList.remove('hidden');
-      }
-      if(m.type==='winner'){
-        winnerEl.textContent=`${m.player} +1 POINT`;
-        winnerEl.style.animation='none';winnerEl.offsetHeight;winnerEl.style.animation=null;
-      }
-    }
-  </script>
+        <div class="scoreboard" id="scoreboard"></div>
+    </div>
+
+    <script>
+        const gameData = {
+            code: localStorage.getItem('gameCode') || 'XXXX',
+            players: [],
+            currentJudgeIndex: 0,
+            round: 0,
+            catalysts: [
+                "A school mental health meeting",
+                "A children's birthday party",
+                "A corporate team building exercise",
+                "A church bake sale",
+                "A kindergarten show and tell",
+                "A family therapy session",
+                "A PTA meeting",
+                "An AA meeting",
+                "A grief counseling session",
+                "A retirement home activity"
+            ],
+            boosters: [
+                "Hosted by a mega corporation",
+                "Sponsored by the government",
+                "Filmed for reality TV",
+                "Live streamed on Twitch",
+                "Paid for by your grandma",
+                "Featuring surprise celebrity guests",
+                "With mandatory attendance",
+                "Recorded for posterity",
+                "Broadcast on national television",
+                "With your entire extended family watching"
+            ],
+            fuckNos: [
+                "Paid for by OnlyFans",
+                "Sponsored by Pornhub Premium",
+                "Featuring a live sex demonstration",
+                "With an open bar of hard liquor",
+                "Including a strip tease performance",
+                "With edibles as party favors",
+                "Featuring your embarrassing search history on display",
+                "With your drunk texts read aloud",
+                "Including a demonstration with sex toys",
+                "Hosted by your ex",
+                "With everyone's browser history revealed",
+                "Featuring interpretive pole dancing",
+                "Including your Tinder profile projected on screen",
+                "With a glory hole in the bathroom",
+                "Sponsored by Bad Dragon",
+                "Including a fetish fashion show",
+                "With your nudes accidentally sent to everyone",
+                "Featuring lines of cocaine on the refreshment table",
+                "With mandatory Jell-O wrestling",
+                "Including a 'guess that STD' game"
+            ]
+        };
+
+        let selectedBooster = null;
+        let currentCatalyst = null;
+        let submittedCards = [];
+
+        document.getElementById('gameCode').textContent = gameData.code;
+
+        // Simulate players joining
+        function addPlayer(name) {
+            const colors = ['house-gryffindor', 'house-slytherin', 'house-ravenclaw', 'house-hufflepuff'];
+            gameData.players.push({
+                name: name,
+                score: 0,
+                color: colors[gameData.players.length % 4]
+            });
+            updatePlayerList();
+        }
+
+        function updatePlayerList() {
+            const list = document.getElementById('playerList');
+            list.innerHTML = '';
+            gameData.players.forEach(player => {
+                const div = document.createElement('div');
+                div.className = `house ${player.color}`;
+                div.innerHTML = `
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-score">${player.score} pts</div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function updateScoreboard() {
+            const scoreboard = document.getElementById('scoreboard');
+            scoreboard.innerHTML = '';
+            gameData.players.forEach(player => {
+                const div = document.createElement('div');
+                div.className = `house ${player.color}`;
+                div.innerHTML = `
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-score">${player.score} pts</div>
+                `;
+                scoreboard.appendChild(div);
+            });
+        }
+
+        function startGame() {
+            if (gameData.players.length < 3) {
+                addPlayer('Player ' + (gameData.players.length + 1));
+                addPlayer('Player ' + (gameData.players.length + 1));
+                addPlayer('Player ' + (gameData.players.length + 1));
+                addPlayer('Player ' + (gameData.players.length + 1));
+            }
+            
+            document.getElementById('waitingRoom').classList.add('hidden');
+            document.getElementById('gamePlay').classList.remove('hidden');
+            startNewRound();
+        }
+
+        function startNewRound() {
+            gameData.round++;
+            submittedCards = [];
+            
+            // Set judge
+            const judge = gameData.players[gameData.currentJudgeIndex];
+            document.getElementById('currentJudge').textContent = judge.name;
+            
+            // Pick catalyst
+            currentCatalyst = gameData.catalysts[Math.floor(Math.random() * gameData.catalysts.length)];
+            document.getElementById('catalystText').textContent = currentCatalyst;
+            
+            // Hide booster initially
+            document.getElementById('boosterCard').classList.add('hidden');
+            document.getElementById('boosterCard').onclick = revealBooster;
+            
+            // Clear previous submissions
+            document.getElementById('fuckNoCards').innerHTML = '';
+            document.getElementById('winnerBanner').classList.add('hidden');
+            
+            updateScoreboard();
+            
+            // Simulate players submitting cards after 2 seconds
+            setTimeout(simulateSubmissions, 2000);
+        }
+
+        function revealBooster() {
+            selectedBooster = gameData.boosters[Math.floor(Math.random() * gameData.boosters.length)];
+            document.getElementById('boosterText').textContent = selectedBooster;
+            document.getElementById('boosterCard').classList.remove('hidden');
+            document.getElementById('boosterCard').onclick = null;
+        }
+
+        function simulateSubmissions() {
+            const container = document.getElementById('fuckNoCards');
+            gameData.players.forEach((player, index) => {
+                if (index !== gameData.currentJudgeIndex) {
+                    const card = document.createElement('div');
+                    card.className = 'card fuck-no';
+                    const fuckNo = gameData.fuckNos[Math.floor(Math.random() * gameData.fuckNos.length)];
+                    card.innerHTML = `
+                        <div class="card-type">Fuck No</div>
+                        <div>???</div>
+                    `;
+                    card.onclick = () => revealFuckNo(card, fuckNo, player);
+                    submittedCards.push({ card, text: fuckNo, player });
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        function revealFuckNo(cardElement, text, player) {
+            cardElement.innerHTML = `
+                <div class="card-type">Fuck No</div>
+                <div>${text}</div>
+            `;
+            cardElement.onclick = () => selectWinner(player);
+        }
+
+        function selectWinner(player) {
+            player.score += 2;
+            document.getElementById('winnerName').textContent = player.name;
+            document.getElementById('winnerBanner').classList.remove('hidden');
+            
+            updateScoreboard();
+            
+            // Move to next judge
+            gameData.currentJudgeIndex = (gameData.currentJudgeIndex + 1) % gameData.players.length;
+            
+            setTimeout(startNewRound, 3000);
+        }
+
+        // Auto-add demo players for testing
+        setTimeout(() => {
+            if (gameData.players.length === 0) {
+                addPlayer('Sarah');
+                addPlayer('Mike');
+                addPlayer('Jessica');
+                addPlayer('Dave');
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
 
