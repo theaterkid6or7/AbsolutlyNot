@@ -1,52 +1,210 @@
-<!-- ===================== index.html ===================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Absolutely Not — Player</title>
-<style>
-  body{margin:0;min-height:100vh;background:#0b0816;color:#fff;font-family:system-ui}
-  .screen{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:24px}
-  .screen.active{display:flex}
-  button{padding:16px 28px;font-size:1.1rem;border-radius:14px;border:none;background:#8b7bff;color:#000;font-weight:700;cursor:pointer}
-  input{padding:14px;border-radius:12px;border:none;font-size:1.1rem;margin-bottom:20px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absolutely Not - 18+ Party Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            padding: 60px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        button {
+            padding: 25px 40px;
+            font-size: 1.4em;
+            font-weight: 600;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .dashboard-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .dashboard-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .player-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+        }
+
+        .player-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(240, 147, 251, 0.5);
+        }
+
+        .game-code {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .game-code input {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5em;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            margin-top: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .game-code input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .back-btn {
+            background: #e0e0e0;
+            color: #666;
+            padding: 15px 30px;
+            font-size: 1em;
+            margin-top: 15px;
+        }
+
+        .back-btn:hover {
+            background: #d0d0d0;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Absolutely Not</h1>
+        <div class="subtitle">The Hilarious Card Game</div>
+        
+        <div class="buttons" id="mainMenu">
+            <button class="dashboard-btn" onclick="goToDashboard()">
+                <span class="emoji">📺</span> Dashboard
+            </button>
+            <button class="player-btn" onclick="showGameCode()">
+                <span class="emoji">🎮</span> Join Game
+            </button>
+        </div>
 
-<div id="join" class="screen active">
-  <h1>Absolutely Not</h1>
-  <input id="name" placeholder="Your name" />
-  <button onclick="joinPlayer()">JOIN GAME</button>
-  <br><br>
-  <button onclick="openDashboard()">OPEN DASHBOARD</button>
-</div>
+        <div class="game-code" id="gameCodeSection">
+            <h3 style="text-align: center; color: #333; margin-bottom: 10px;">Enter Game Code</h3>
+            <input type="text" id="gameCodeInput" placeholder="XXXX" maxlength="4">
+            <button class="player-btn" onclick="joinGame()" style="width: 100%; margin-top: 15px;">Join Game</button>
+            <button class="back-btn" onclick="showMainMenu()" style="width: 100%;">← Back</button>
+        </div>
+    </div>
 
-<div id="player" class="screen">
-  <h2 id="role">Waiting…</h2>
-  <button onclick="submitCard()">SUBMIT CARD</button>
-</div>
+    <script>
+        function goToDashboard() {
+            const gameCode = Math.random().toString(36).substr(2, 4).toUpperCase();
+            localStorage.setItem('gameCode', gameCode);
+            localStorage.setItem('role', 'dashboard');
+            window.location.href = 'dashboard.html';
+        }
 
-<script>
-  const channel = new BroadcastChannel('absolutely-not');
-  let playerName='';
+        function showGameCode() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('gameCodeSection').style.display = 'block';
+        }
 
-  function joinPlayer(){
-    playerName=document.getElementById('name').value.trim();
-    if(!playerName) return alert('name required');
-    document.getElementById('join').classList.remove('active');
-    document.getElementById('player').classList.add('active');
-    channel.postMessage({type:'playerJoin',name:playerName});
-  }
+        function showMainMenu() {
+            document.getElementById('mainMenu').style.display = 'flex';
+            document.getElementById('gameCodeSection').style.display = 'none';
+        }
 
-  function openDashboard(){
-    window.open('dashboard.html','_blank');
-  }
-
-  function submitCard(){
-    channel.postMessage({type:'cardSubmitted',player:playerName});
-  }
-</script>
+        function joinGame() {
+            const code = document.getElementById('gameCodeInput').value.toUpperCase();
+            if (code.length === 4) {
+                localStorage.setItem('gameCode', code);
+                localStorage.setItem('role', 'player');
+                const playerName = prompt('Enter your name:');
+                if (playerName) {
+                    localStorage.setItem('playerName', playerName);
+                    window.location.href = 'player.html';
+                }
+            } else {
+                alert('Please enter a valid 4-character game code');
+            }
+        }
+    </script>
 </body>
 </html>
