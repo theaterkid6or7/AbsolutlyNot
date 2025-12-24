@@ -1,145 +1,52 @@
+<!-- ===================== index.html ===================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Absolutely Not – Dashboard</title>
-
+<title>Absolutely Not — Player</title>
 <style>
-:root{
-  --bg:#07040f;
-  --panel:#120b22;
-  --accent:#8b7bff;
-  --gold:#ffd36b;
-  --text:#f5f3ff;
-}
-*{box-sizing:border-box}
-body{
-  margin:0; min-height:100vh;
-  background:radial-gradient(circle at top,#1a1240,var(--bg) 70%);
-  font-family: 'Cinzel', serif;
-  color:var(--text);
-}
-
-.dashboard{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr auto;
-  gap:24px;
-  padding:32px;
-  max-width:1400px;
-  margin:0 auto;
-}
-
-header{
-  grid-column:1 / -1;
-  text-align:center;
-}
-header h1{
-  font-size:clamp(2.5rem,5vw,4rem);
-  letter-spacing:4px;
-}
-
-.panel{
-  background:linear-gradient(180deg,#1e1550,var(--panel));
-  border:1px solid rgba(139,123,255,.4);
-  border-radius:22px;
-  padding:32px;
-  box-shadow:0 0 60px rgba(139,123,255,.2);
-  position:relative;
-}
-.panel h2{
-  margin-top:0;
-  letter-spacing:2px;
-  font-size:1.4rem;
-  text-align:center;
-}
-
-.content{
-  font-size:clamp(1.4rem,3vw,2.2rem);
-  text-align:center;
-  margin-top:24px;
-}
-
-#escalation.hidden{
-  filter:blur(10px);
-  opacity:.4;
-}
-
-.points{
-  grid-column:1 / -1;
-  text-align:center;
-  font-size:clamp(2.5rem,6vw,4rem);
-  color:var(--gold);
-  opacity:0;
-  animation:points 2.5s ease forwards;
-}
-
-@keyframes points{
-  0%{opacity:0; transform:scale(.6)}
-  40%{opacity:1; transform:scale(1.1)}
-  100%{opacity:0; transform:scale(1)}
-}
-
-footer{
-  grid-column:1 / -1;
-  display:flex;
-  justify-content:space-between;
-  opacity:.6;
-  font-size:.9rem;
-}
+  body{margin:0;min-height:100vh;background:#0b0816;color:#fff;font-family:system-ui}
+  .screen{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;padding:24px}
+  .screen.active{display:flex}
+  button{padding:16px 28px;font-size:1.1rem;border-radius:14px;border:none;background:#8b7bff;color:#000;font-weight:700;cursor:pointer}
+  input{padding:14px;border-radius:12px;border:none;font-size:1.1rem;margin-bottom:20px}
 </style>
 </head>
 <body>
 
-<div class="dashboard">
-  <header>
-    <h1>Absolutely Not</h1>
-  </header>
+<div id="join" class="screen active">
+  <h1>Absolutely Not</h1>
+  <input id="name" placeholder="Your name" />
+  <button onclick="joinPlayer()">JOIN GAME</button>
+  <br><br>
+  <button onclick="openDashboard()">OPEN DASHBOARD</button>
+</div>
 
-  <div class="panel">
-    <h2>SETUP</h2>
-    <div id="setup" class="content">Waiting…</div>
-  </div>
-
-  <div class="panel">
-    <h2>ESCALATION</h2>
-    <div id="escalation" class="content hidden">???</div>
-  </div>
-
-  <div id="points" class="points">+10 HOUSE POINTS</div>
-
-  <footer>
-    <div>Dashboard Mode</div>
-    <div id="status">Connected</div>
-  </footer>
+<div id="player" class="screen">
+  <h2 id="role">Waiting…</h2>
+  <button onclick="submitCard()">SUBMIT CARD</button>
 </div>
 
 <script>
-const channel = new BroadcastChannel('absolutely-not');
-const setupEl = document.getElementById('setup');
-const escalationEl = document.getElementById('escalation');
-const pointsEl = document.getElementById('points');
+  const channel = new BroadcastChannel('absolutely-not');
+  let playerName='';
 
-channel.onmessage = e => {
-  const m = e.data;
-
-  if(m.type === 'setup'){
-    setupEl.textContent = m.text;
+  function joinPlayer(){
+    playerName=document.getElementById('name').value.trim();
+    if(!playerName) return alert('name required');
+    document.getElementById('join').classList.remove('active');
+    document.getElementById('player').classList.add('active');
+    channel.postMessage({type:'playerJoin',name:playerName});
   }
 
-  if(m.type === 'escalation'){
-    escalationEl.textContent = m.text;
-    escalationEl.classList.remove('hidden');
+  function openDashboard(){
+    window.open('dashboard.html','_blank');
   }
 
-  if(m.type === 'winner'){
-    pointsEl.style.animation = 'none';
-    pointsEl.offsetHeight; // reset
-    pointsEl.style.animation = null;
+  function submitCard(){
+    channel.postMessage({type:'cardSubmitted',player:playerName});
   }
-};
 </script>
-
 </body>
 </html>
