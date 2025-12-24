@@ -3,214 +3,143 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Absolutely Not</title>
+<title>Absolutely Not – Dashboard</title>
 
 <style>
 :root{
-  --bg:#0b0614; --card:#161027; --accent:#9b87ff; --text:#f4f2ff;
+  --bg:#07040f;
+  --panel:#120b22;
+  --accent:#8b7bff;
+  --gold:#ffd36b;
+  --text:#f5f3ff;
 }
 *{box-sizing:border-box}
 body{
-  margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  background:radial-gradient(circle at top,#1c1233,var(--bg) 70%);
+  margin:0; min-height:100vh;
+  background:radial-gradient(circle at top,#1a1240,var(--bg) 70%);
+  font-family: 'Cinzel', serif;
   color:var(--text);
 }
-#app{width:100%; max-width:1200px; padding:clamp(16px,4vw,48px); text-align:center}
-h1{font-size:clamp(2rem,6vw,3.5rem)}
-h2{font-size:clamp(1.2rem,4vw,1.8rem)}
-.card{
-  background:linear-gradient(180deg,#1f1740,var(--card));
-  border:1px solid rgba(155,135,255,.4);
-  border-radius:18px; padding:clamp(16px,3vw,32px);
-  margin:20px auto; max-width:900px;
-  box-shadow:0 0 40px rgba(155,135,255,.15)
+
+.dashboard{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap:24px;
+  padding:32px;
+  max-width:1400px;
+  margin:0 auto;
 }
-button,input{
-  width:100%; padding:14px; margin-top:12px; font-size:1rem;
-  border-radius:12px; border:none
+
+header{
+  grid-column:1 / -1;
+  text-align:center;
 }
-button{background:var(--accent); color:#0b0614; cursor:pointer}
-button:hover{background:#b3a3ff}
-.hidden{display:none}
-.fade{animation:fade .8s ease forwards}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#points{font-size:clamp(2rem,6vw,3rem); color:gold; margin-top:20px}
+header h1{
+  font-size:clamp(2.5rem,5vw,4rem);
+  letter-spacing:4px;
+}
+
+.panel{
+  background:linear-gradient(180deg,#1e1550,var(--panel));
+  border:1px solid rgba(139,123,255,.4);
+  border-radius:22px;
+  padding:32px;
+  box-shadow:0 0 60px rgba(139,123,255,.2);
+  position:relative;
+}
+.panel h2{
+  margin-top:0;
+  letter-spacing:2px;
+  font-size:1.4rem;
+  text-align:center;
+}
+
+.content{
+  font-size:clamp(1.4rem,3vw,2.2rem);
+  text-align:center;
+  margin-top:24px;
+}
+
+#escalation.hidden{
+  filter:blur(10px);
+  opacity:.4;
+}
+
+.points{
+  grid-column:1 / -1;
+  text-align:center;
+  font-size:clamp(2.5rem,6vw,4rem);
+  color:var(--gold);
+  opacity:0;
+  animation:points 2.5s ease forwards;
+}
+
+@keyframes points{
+  0%{opacity:0; transform:scale(.6)}
+  40%{opacity:1; transform:scale(1.1)}
+  100%{opacity:0; transform:scale(1)}
+}
+
+footer{
+  grid-column:1 / -1;
+  display:flex;
+  justify-content:space-between;
+  opacity:.6;
+  font-size:.9rem;
+}
 </style>
 </head>
 <body>
-<div id="app">
-<h1>Absolutely Not</h1>
 
-<!-- ROLE SELECT -->
-<div id="join" class="card">
-  <h2>Join Game</h2>
-  <input id="nameInput" placeholder="Player name" />
-  <button id="playerBtn">Join as Player</button>
-  <hr style="margin:20px 0;opacity:.25" />
-  <button id="dashBtn">Open Dashboard (TV)</button>
-</div>
+<div class="dashboard">
+  <header>
+    <h1>Absolutely Not</h1>
+  </header>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
-  <div class="card"><h2>Setup</h2><div id="setup">—</div></div>
-  <div class="card"><h2>Escalation</h2><div id="escalation">???</div></div>
-  <div id="points" class="hidden">+10 HOUSE POINTS</div>
-</div>
-
-<!-- PLAYER -->
-<div id="player" class="hidden">
-  <div class="card">
-    <h2 id="roleText"></h2>
-    <div id="playerContent"></div>
+  <div class="panel">
+    <h2>SETUP</h2>
+    <div id="setup" class="content">Waiting…</div>
   </div>
-</div>
+
+  <div class="panel">
+    <h2>ESCALATION</h2>
+    <div id="escalation" class="content hidden">???</div>
+  </div>
+
+  <div id="points" class="points">+10 HOUSE POINTS</div>
+
+  <footer>
+    <div>Dashboard Mode</div>
+    <div id="status">Connected</div>
+  </footer>
 </div>
 
 <script>
-/* ================= DATA ================= */
-const SETUPS=[
-  'A mandatory school assembly',
-  'A charity campaign',
-  'A children’s reboot',
-  'Your boss opens the meeting with:'
-];
-const ESCALATIONS=[
-  '—and HR approved it',
-  '—right after a tragedy',
-  '—sponsored by a corporation',
-  '—and it becomes policy',
-  '—everyone claps anyway'
-];
-const CARDS=[
-  'This gets a Netflix documentary',
-  'Someone apologizes on Twitter',
-  'It wins an award',
-  'Congress pretends to care'
-];
+const channel = new BroadcastChannel('absolutely-not');
+const setupEl = document.getElementById('setup');
+const escalationEl = document.getElementById('escalation');
+const pointsEl = document.getElementById('points');
 
-/* ================= STATE ================= */
-const channel=new BroadcastChannel('absolutely-not');
-let me=null;
-let isDashboard=false;
-let players=[];
-let judgeIndex=0;
-let submissions=[];
-let currentEscalation=null;
-let currentSetup=null;
+channel.onmessage = e => {
+  const m = e.data;
 
-/* ================= ELEMENTS ================= */
-const joinEl=document.getElementById('join');
-const dashEl=document.getElementById('dashboard');
-const playerEl=document.getElementById('player');
-const roleText=document.getElementById('roleText');
-const playerContent=document.getElementById('playerContent');
-const setupEl=document.getElementById('setup');
-const escalationEl=document.getElementById('escalation');
-const pointsEl=document.getElementById('points');
+  if(m.type === 'setup'){
+    setupEl.textContent = m.text;
+  }
 
-/* ================= JOIN ================= */
-document.getElementById('playerBtn').onclick=()=>{
-  const name=document.getElementById('nameInput').value.trim();
-  if(!name) return alert('Enter a name');
-  me=name;
-  joinEl.classList.add('hidden');
-  playerEl.classList.remove('hidden');
-  channel.postMessage({type:'join',name});
-};
+  if(m.type === 'escalation'){
+    escalationEl.textContent = m.text;
+    escalationEl.classList.remove('hidden');
+  }
 
-document.getElementById('dashBtn').onclick=()=>{
-  isDashboard=true;
-  joinEl.classList.add('hidden');
-  dashEl.classList.remove('hidden');
-  if(!currentSetup){
-    currentSetup=random(SETUPS);
-    setupEl.textContent=currentSetup;
+  if(m.type === 'winner'){
+    pointsEl.style.animation = 'none';
+    pointsEl.offsetHeight; // reset
+    pointsEl.style.animation = null;
   }
 };
-
-/* ================= CHANNEL ================= */
-channel.onmessage=e=>{
-  const m=e.data;
-  if(m.type==='join' && !players.includes(m.name)){
-    players.push(m.name);
-    updatePlayerUI();
-  }
-  if(m.type==='setup'){
-    currentSetup=m.text;
-    setupEl.textContent=m.text;
-  }
-  if(m.type==='escalation'){
-    currentEscalation=m.text;
-    escalationEl.textContent=m.text;
-    escalationEl.classList.add('fade');
-  }
-  if(m.type==='submit'){
-    submissions.push(m.card);
-    if(isJudge()) showJudgeChoices();
-  }
-  if(m.type==='winner'){
-    showPoints();
-    nextRound();
-  }
-};
-
-/* ================= GAME FLOW ================= */
-function updatePlayerUI(){
-  if(!me) return;
-  const myIndex=players.indexOf(me);
-  const judge=myIndex===judgeIndex;
-  roleText.textContent=judge?'You are the Judge':'Submit a Card';
-  judge?showEscalations():showPlayerCards();
-}
-
-function showEscalations(){
-  playerContent.innerHTML='';
-  shuffle(ESCALATIONS).slice(0,3).forEach(text=>{
-    const b=document.createElement('button');
-    b.textContent='Face-Down Card';
-    b.onclick=()=>channel.postMessage({type:'escalation',text});
-    playerContent.appendChild(b);
-  });
-}
-
-function showPlayerCards(){
-  playerContent.innerHTML='';
-  CARDS.forEach(card=>{
-    const b=document.createElement('button');
-    b.textContent=card;
-    b.onclick=()=>channel.postMessage({type:'submit',card});
-    playerContent.appendChild(b);
-  });
-}
-
-function showJudgeChoices(){
-  playerContent.innerHTML='';
-  submissions.forEach(card=>{
-    const b=document.createElement('button');
-    b.textContent=card;
-    b.onclick=()=>channel.postMessage({type:'winner'});
-    playerContent.appendChild(b);
-  });
-}
-
-function nextRound(){
-  submissions=[];
-  currentEscalation=null;
-  escalationEl.textContent='???';
-  judgeIndex=(judgeIndex+1)%players.length;
-  updatePlayerUI();
-}
-
-function showPoints(){
-  if(!isDashboard) return;
-  pointsEl.classList.remove('hidden');
-  setTimeout(()=>pointsEl.classList.add('hidden'),2500);
-}
-
-function isJudge(){return players[judgeIndex]===me}
-function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-function random(a){return a[Math.floor(Math.random()*a.length)]}
 </script>
+
 </body>
 </html>
