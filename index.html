@@ -1,177 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Absolutely Not</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Absolutely Not</title>
 
-  <style>
-    :root {
-      --bg:#0b0614; --card:#161027; --accent:#9b87ff; --text:#f4f2ff;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      background:radial-gradient(circle at top,#1c1233,var(--bg) 70%);
-      color:var(--text);
-    }
-    #app{width:100%; max-width:1100px; padding:clamp(16px,4vw,48px); text-align:center}
-    h1{font-size:clamp(2rem,6vw,3.5rem); margin-bottom:1rem}
-    h2{font-size:clamp(1.2rem,4vw,1.8rem)}
-    .card{
-      background:linear-gradient(180deg,#1f1740,var(--card));
-      border:1px solid rgba(155,135,255,.4);
-      border-radius:18px; padding:clamp(16px,3vw,32px);
-      margin:20px auto; max-width:800px;
-      box-shadow:0 0 40px rgba(155,135,255,.15)
-    }
-    input,button{
-      width:100%; padding:14px; margin-top:12px; font-size:1rem;
-      border-radius:12px; border:none
-    }
-    button{background:var(--accent); color:#0b0614; cursor:pointer}
-    button:hover{background:#b3a3ff}
-    .hidden{display:none}
-    .fade{animation:fade .8s ease forwards}
-    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    #points{font-size:clamp(2rem,6vw,3rem); color:gold; margin-top:20px}
-  </style>
+<style>
+:root{
+  --bg:#0b0614; --card:#161027; --accent:#9b87ff; --text:#f4f2ff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:radial-gradient(circle at top,#1c1233,var(--bg) 70%);
+  color:var(--text);
+}
+#app{width:100%; max-width:1200px; padding:clamp(16px,4vw,48px); text-align:center}
+h1{font-size:clamp(2rem,6vw,3.5rem)}
+h2{font-size:clamp(1.2rem,4vw,1.8rem)}
+.card{
+  background:linear-gradient(180deg,#1f1740,var(--card));
+  border:1px solid rgba(155,135,255,.4);
+  border-radius:18px; padding:clamp(16px,3vw,32px);
+  margin:20px auto; max-width:900px;
+  box-shadow:0 0 40px rgba(155,135,255,.15)
+}
+button,input{
+  width:100%; padding:14px; margin-top:12px; font-size:1rem;
+  border-radius:12px; border:none
+}
+button{background:var(--accent); color:#0b0614; cursor:pointer}
+button:hover{background:#b3a3ff}
+.hidden{display:none}
+.fade{animation:fade .8s ease forwards}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#points{font-size:clamp(2rem,6vw,3rem); color:gold; margin-top:20px}
+</style>
 </head>
 <body>
 <div id="app">
-  <h1>Absolutely Not</h1>
+<h1>Absolutely Not</h1>
 
-  <!-- JOIN -->
-  <div id="join" class="card">
-    <h2>Join Game</h2>
-    <input id="nameInput" placeholder="Your name" />
-    <button onclick="joinAsPlayer()">Join as Player</button>
-    <hr style="margin:20px 0;opacity:.2" />
-    <button onclick="joinAsDashboard()">Open Dashboard (TV)</button>
-  </div>
+<!-- ROLE SELECT -->
+<div id="join" class="card">
+  <h2>Join Game</h2>
+  <input id="nameInput" placeholder="Player name" />
+  <button id="playerBtn">Join as Player</button>
+  <hr style="margin:20px 0;opacity:.25" />
+  <button id="dashBtn">Open Dashboard (TV)</button>
+</div>
 
-  <!-- DASHBOARD -->
-  <div id="dashboard" class="hidden">
-    <div class="card"><h2>Setup</h2><div id="setup"></div></div>
-    <div class="card"><h2>Escalation</h2><div id="escalation">???</div></div>
-    <div id="points" class="hidden">+10 HOUSE POINTS</div>
-  </div>
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+  <div class="card"><h2>Setup</h2><div id="setup">—</div></div>
+  <div class="card"><h2>Escalation</h2><div id="escalation">???</div></div>
+  <div id="points" class="hidden">+10 HOUSE POINTS</div>
+</div>
 
-  <!-- PLAYER -->
-  <div id="player" class="hidden">
-    <div class="card">
-      <h2 id="role"></h2>
-      <div id="content"></div>
-    </div>
+<!-- PLAYER -->
+<div id="player" class="hidden">
+  <div class="card">
+    <h2 id="roleText"></h2>
+    <div id="playerContent"></div>
   </div>
+</div>
 </div>
 
 <script>
-/* ============ DATA ============ */
-const setups=[
+/* ================= DATA ================= */
+const SETUPS=[
   'A mandatory school assembly',
   'A charity campaign',
   'A children’s reboot',
   'Your boss opens the meeting with:'
 ];
-const escalations=[
+const ESCALATIONS=[
   '—and HR approved it',
   '—right after a tragedy',
   '—sponsored by a corporation',
   '—and it becomes policy',
   '—everyone claps anyway'
 ];
-const cards=[
+const CARDS=[
   'This gets a Netflix documentary',
   'Someone apologizes on Twitter',
   'It wins an award',
   'Congress pretends to care'
 ];
 
-/* ============ STATE ============ */
+/* ================= STATE ================= */
 const channel=new BroadcastChannel('absolutely-not');
-let me=null; let isDashboard=false;
-let players=[]; let judgeIndex=0;
-let submissions=[]; let escalation=null;
+let me=null;
+let isDashboard=false;
+let players=[];
+let judgeIndex=0;
+let submissions=[];
+let currentEscalation=null;
+let currentSetup=null;
 
-/* ============ JOIN ============ */
-function joinAsPlayer(){
+/* ================= ELEMENTS ================= */
+const joinEl=document.getElementById('join');
+const dashEl=document.getElementById('dashboard');
+const playerEl=document.getElementById('player');
+const roleText=document.getElementById('roleText');
+const playerContent=document.getElementById('playerContent');
+const setupEl=document.getElementById('setup');
+const escalationEl=document.getElementById('escalation');
+const pointsEl=document.getElementById('points');
+
+/* ================= JOIN ================= */
+document.getElementById('playerBtn').onclick=()=>{
   const name=document.getElementById('nameInput').value.trim();
   if(!name) return alert('Enter a name');
   me=name;
-  document.getElementById('join').classList.add('hidden');
-  document.getElementById('player').classList.remove('hidden');
+  joinEl.classList.add('hidden');
+  playerEl.classList.remove('hidden');
   channel.postMessage({type:'join',name});
-}
+};
 
-function joinAsDashboard(){
+document.getElementById('dashBtn').onclick=()=>{
   isDashboard=true;
-  document.getElementById('join').classList.add('hidden');
-  document.getElementById('dashboard').classList.remove('hidden');
-  document.getElementById('setup').innerText=random(setups);
-}
+  joinEl.classList.add('hidden');
+  dashEl.classList.remove('hidden');
+  if(!currentSetup){
+    currentSetup=random(SETUPS);
+    setupEl.textContent=currentSetup;
+  }
+};
 
-/* ============ CHANNEL ============ */
+/* ================= CHANNEL ================= */
 channel.onmessage=e=>{
   const m=e.data;
   if(m.type==='join' && !players.includes(m.name)){
-    players.push(m.name); updateRoles();
+    players.push(m.name);
+    updatePlayerUI();
   }
-  if(m.type==='escalation'){ escalation=m.text; showEscalation(); }
-  if(m.type==='submit'){ submissions.push(m.card); if(isJudge()) showJudgePicks(); }
-  if(m.type==='winner'){ showPoints(); nextRound(); }
+  if(m.type==='setup'){
+    currentSetup=m.text;
+    setupEl.textContent=m.text;
+  }
+  if(m.type==='escalation'){
+    currentEscalation=m.text;
+    escalationEl.textContent=m.text;
+    escalationEl.classList.add('fade');
+  }
+  if(m.type==='submit'){
+    submissions.push(m.card);
+    if(isJudge()) showJudgeChoices();
+  }
+  if(m.type==='winner'){
+    showPoints();
+    nextRound();
+  }
 };
 
-/* ============ GAME FLOW ============ */
-function updateRoles(){ if(!me) return;
-  const i=players.indexOf(me);
-  const judge=i===judgeIndex;
-  document.getElementById('role').innerText=judge?'You are the Judge':'Submit a Card';
+/* ================= GAME FLOW ================= */
+function updatePlayerUI(){
+  if(!me) return;
+  const myIndex=players.indexOf(me);
+  const judge=myIndex===judgeIndex;
+  roleText.textContent=judge?'You are the Judge':'Submit a Card';
   judge?showEscalations():showPlayerCards();
 }
 
 function showEscalations(){
-  const c=document.getElementById('content'); c.innerHTML='';
-  shuffle(escalations).slice(0,3).forEach(text=>{
-    const b=document.createElement('button'); b.textContent='Face‑Down Card';
-    b.onclick=()=>channel.postMessage({type:'escalation',text}); c.appendChild(b);
+  playerContent.innerHTML='';
+  shuffle(ESCALATIONS).slice(0,3).forEach(text=>{
+    const b=document.createElement('button');
+    b.textContent='Face-Down Card';
+    b.onclick=()=>channel.postMessage({type:'escalation',text});
+    playerContent.appendChild(b);
   });
 }
 
 function showPlayerCards(){
-  const c=document.getElementById('content'); c.innerHTML='';
-  cards.forEach(card=>{
-    const b=document.createElement('button'); b.textContent=card;
-    b.onclick=()=>channel.postMessage({type:'submit',card}); c.appendChild(b);
+  playerContent.innerHTML='';
+  CARDS.forEach(card=>{
+    const b=document.createElement('button');
+    b.textContent=card;
+    b.onclick=()=>channel.postMessage({type:'submit',card});
+    playerContent.appendChild(b);
   });
 }
 
-function showJudgePicks(){
-  const c=document.getElementById('content'); c.innerHTML='';
+function showJudgeChoices(){
+  playerContent.innerHTML='';
   submissions.forEach(card=>{
-    const b=document.createElement('button'); b.textContent=card;
-    b.onclick=()=>channel.postMessage({type:'winner'}); c.appendChild(b);
+    const b=document.createElement('button');
+    b.textContent=card;
+    b.onclick=()=>channel.postMessage({type:'winner'});
+    playerContent.appendChild(b);
   });
 }
 
-function showEscalation(){
-  const el=document.getElementById('escalation');
-  if(el){ el.textContent=escalation; el.classList.add('fade'); }
+function nextRound(){
+  submissions=[];
+  currentEscalation=null;
+  escalationEl.textContent='???';
+  judgeIndex=(judgeIndex+1)%players.length;
+  updatePlayerUI();
 }
 
 function showPoints(){
-  const p=document.getElementById('points'); if(!p) return;
-  p.classList.remove('hidden'); setTimeout(()=>p.classList.add('hidden'),2500);
+  if(!isDashboard) return;
+  pointsEl.classList.remove('hidden');
+  setTimeout(()=>pointsEl.classList.add('hidden'),2500);
 }
 
-function nextRound(){ submissions=[]; escalation=null;
-  judgeIndex=(judgeIndex+1)%players.length; updateRoles();
-}
-
-function isJudge(){ return players[judgeIndex]===me; }
-function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
-function random(a){ return a[Math.floor(Math.random()*a.length)]; }
+function isJudge(){return players[judgeIndex]===me}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function random(a){return a[Math.floor(Math.random()*a.length)]}
 </script>
 </body>
 </html>
