@@ -1,205 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absolutely Not - Adult Party Game</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-
-        .container {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            max-width: 600px;
-            width: 90%;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .warning {
-            background: rgba(255, 107, 107, 0.2);
-            border: 2px solid #ff6b6b;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            font-weight: bold;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-dashboard {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .btn-player {
-            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .name-input {
-            margin-top: 2rem;
-            display: none;
-        }
-
-        .name-input input {
-            padding: 0.8rem;
-            font-size: 1rem;
-            border: 2px solid #667eea;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            width: 250px;
-        }
-
-        .name-input input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .join-btn {
-            background: linear-gradient(45deg, #56ab2f 0%, #a8e6cf 100%);
-            margin-top: 1rem;
-        }
-    </style>
+  <title>Absolutely Not</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 20vh;
+    }
+    button {
+      padding: 20px 40px;
+      font-size: 24px;
+      margin: 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Absolutely Not</h1>
-        <p class="subtitle">The Party Game Where Everything Goes Wrong</p>
-        
-        <div class="warning">
-            🔞 ADULTS ONLY - Contains Inappropriate Content 🔞
-        </div>
 
-        <div class="button-group">
-            <button class="btn btn-dashboard" onclick="setupGame('dashboard')">TV Dashboard</button>
-            <button class="btn btn-player" onclick="showNameInput()">Join Game</button>
-        </div>
+<h1>ABSOLUTELY NOT</h1>
 
-        <div class="name-input" id="nameInput">
-            <input type="text" id="playerName" placeholder="Enter your name..." maxlength="20">
-            <br>
-            <button class="btn join-btn" onclick="joinGame()">Join Game</button>
-        </div>
-    </div>
+<button onclick="location.href='dashboard.html'">Dashboard (TV)</button>
+<button onclick="location.href='player.html'">Player</button>
 
-    <script>
-        // Game state management
-        let gameState = {
-            players: [],
-            currentJudge: 0,
-            currentCatalyst: null,
-            currentBoosters: [],
-            currentFuckNos: {},
-            round: 1,
-            scores: {},
-            gameStarted: false
-        };
-
-        // Load game state from localStorage
-        function loadGameState() {
-            const saved = localStorage.getItem('absolutelyNotGameState');
-            if (saved) {
-                gameState = JSON.parse(saved);
-            }
-        }
-
-        // Save game state to localStorage
-        function saveGameState() {
-            localStorage.setItem('absolutelyNotGameState', JSON.stringify(gameState));
-        }
-
-        function setupGame(type) {
-            if (type === 'dashboard') {
-                window.location.href = 'dashboard.html';
-            }
-        }
-
-        function showNameInput() {
-            document.getElementById('nameInput').style.display = 'block';
-        }
-
-        function joinGame() {
-            const name = document.getElementById('playerName').value.trim();
-            if (name) {
-                loadGameState();
-                
-                // Add player to game
-                const player = {
-                    id: Date.now(),
-                    name: name,
-                    joinedAt: new Date().toISOString()
-                };
-                
-                gameState.players.push(player);
-                gameState.scores[name] = gameState.scores[name] || 0;
-                
-                saveGameState();
-                
-                // Redirect to player page
-                window.location.href = `player.html?playerId=${player.id}&name=${encodeURIComponent(name)}`;
-            } else {
-                alert('Please enter a name!');
-            }
-        }
-
-        // Initialize on page load
-        window.onload = function() {
-            loadGameState();
-        };
-    </script>
 </body>
 </html>
