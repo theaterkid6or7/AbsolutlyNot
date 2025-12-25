@@ -411,23 +411,33 @@
         };
 
         window.startDashboard = async function() {
+            if (selectedPacks.length === 0) {
+                alert('Please select at least the Base pack!');
+                return;
+            }
+
             const gameCode = Math.random().toString(36).substr(2, 4).toUpperCase();
             
-            // Create game in Firebase with selected packs
-            await set(ref(database, `games/${gameCode}`), {
-                host: true,
-                players: {},
-                gameState: 'waiting',
-                currentJudge: 0,
-                round: 0,
-                selectedPacks: selectedPacks,
-                createdAt: Date.now()
-            });
-            
-            localStorage.setItem('gameCode', gameCode);
-            localStorage.setItem('role', 'dashboard');
-            localStorage.setItem('selectedPacks', JSON.stringify(selectedPacks));
-            window.location.href = 'dashboard.html';
+            try {
+                // Create game in Firebase with selected packs
+                await set(ref(database, `games/${gameCode}`), {
+                    host: true,
+                    players: {},
+                    gameState: 'waiting',
+                    currentJudge: 0,
+                    round: 0,
+                    selectedPacks: selectedPacks,
+                    createdAt: Date.now()
+                });
+                
+                localStorage.setItem('gameCode', gameCode);
+                localStorage.setItem('role', 'dashboard');
+                localStorage.setItem('selectedPacks', JSON.stringify(selectedPacks));
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error('Error creating game:', error);
+                alert('Failed to create game. Please try again.');
+            }
         };
 
         window.showGameCode = function() {
