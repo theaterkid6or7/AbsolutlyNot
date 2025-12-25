@@ -370,7 +370,8 @@
             playerId: null,
             isJudge: false,
             selectedCard: null,
-            hand: []
+            hand: [],
+            selectedPacks: []
         };
 
         const fuckNos = [];
@@ -382,6 +383,15 @@
         // Join the game in Firebase
         const gameRef = ref(database, `games/${playerData.gameCode}`);
         const playersRef = ref(database, `games/${playerData.gameCode}/players`);
+        
+        // Get selected packs from game
+        get(gameRef).then((snapshot) => {
+            const gameData = snapshot.val();
+            if (gameData && gameData.selectedPacks) {
+                playerData.selectedPacks = gameData.selectedPacks;
+                loadCards();
+            }
+        });
         
         // Add player to game
         const newPlayerRef = push(playersRef);
@@ -441,15 +451,21 @@
                 const lines = text.split('\n');
                 
                 let currentType = '';
+                let currentPack = '';
+                
                 lines.forEach(line => {
                     line = line.trim();
-                    if (line === '[BOOSTERS]') {
-                        currentType = 'booster';
-                    } else if (line === '[FUCKNOS]') {
-                        currentType = 'fuckno';
+                    
+                    if (line.startsWith('[') && line.endsWith(']')) {
+                        const parts = line.slice(1, -1).split(':');
+                        currentType = parts[0].toLowerCase();
+                        currentPack = parts[1] || 'BASE';
                     } else if (line && !line.startsWith('[')) {
-                        if (currentType === 'booster') boosters.push(line);
-                        else if (currentType === 'fuckno') fuckNos.push(line);
+                        // Only add cards from selected packs
+                        if (playerData.selectedPacks.includes(currentPack)) {
+                            if (currentType === 'boosters') boosters.push(line);
+                            else if (currentType === 'fucknos') fuckNos.push(line);
+                        }
                     }
                 });
             } catch (error) {
