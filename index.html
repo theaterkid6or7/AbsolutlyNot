@@ -51,6 +51,64 @@
             font-weight: 500;
         }
 
+        .pack-selection {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .pack-selection h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .pack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .pack-option {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .pack-option:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        .pack-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .pack-option .pack-emoji {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .pack-option .pack-name {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .pack-option .pack-count {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 5px;
+        }
+
         .buttons {
             display: flex;
             flex-direction: column;
@@ -157,12 +215,97 @@
         <div class="subtitle">The Hilarious Card Game</div>
         
         <div class="buttons" id="mainMenu">
-            <button class="dashboard-btn" onclick="goToDashboard()">
-                <span class="emoji">📺</span> Dashboard
+            <button class="dashboard-btn" onclick="showPackSelection()">
+                <span class="emoji">📺</span> Host Dashboard
             </button>
             <button class="player-btn" onclick="showGameCode()">
                 <span class="emoji">🎮</span> Join Game
             </button>
+        </div>
+
+        <div class="pack-selection" id="packSelection">
+            <h3>Select Card Packs</h3>
+            <div class="pack-grid" id="packGrid">
+                <div class="pack-option selected" data-pack="BASE" onclick="togglePack(this)">
+                    <div class="pack-emoji">🎴</div>
+                    <div class="pack-name">Base Game</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="HOLIDAY" onclick="togglePack(this)">
+                    <div class="pack-emoji">🎄</div>
+                    <div class="pack-name">Holiday</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="PRIDE" onclick="togglePack(this)">
+                    <div class="pack-emoji">🏳️‍🌈</div>
+                    <div class="pack-name">Pride</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="AI" onclick="togglePack(this)">
+                    <div class="pack-emoji">🤖</div>
+                    <div class="pack-name">AI & Tech</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="SCIENCE" onclick="togglePack(this)">
+                    <div class="pack-emoji">🔬</div>
+                    <div class="pack-name">Science</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="FOOD" onclick="togglePack(this)">
+                    <div class="pack-emoji">🍔</div>
+                    <div class="pack-name">Food</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="GAMING" onclick="togglePack(this)">
+                    <div class="pack-emoji">🎮</div>
+                    <div class="pack-name">Gaming</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="SPORTS" onclick="togglePack(this)">
+                    <div class="pack-emoji">⚽</div>
+                    <div class="pack-name">Sports</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="MEDICAL" onclick="togglePack(this)">
+                    <div class="pack-emoji">⚕️</div>
+                    <div class="pack-name">Medical</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="POLITICS" onclick="togglePack(this)">
+                    <div class="pack-emoji">🗳️</div>
+                    <div class="pack-name">Politics</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="RELIGION" onclick="togglePack(this)">
+                    <div class="pack-emoji">✝️</div>
+                    <div class="pack-name">Religion</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="WORKPLACE" onclick="togglePack(this)">
+                    <div class="pack-emoji">💼</div>
+                    <div class="pack-name">Workplace</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="SOCIAL MEDIA" onclick="togglePack(this)">
+                    <div class="pack-emoji">📱</div>
+                    <div class="pack-name">Social Media</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="EDUCATION" onclick="togglePack(this)">
+                    <div class="pack-emoji">🎓</div>
+                    <div class="pack-name">Education</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="TRAVEL" onclick="togglePack(this)">
+                    <div class="pack-emoji">✈️</div>
+                    <div class="pack-name">Travel</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+            </div>
+            <button class="dashboard-btn" onclick="startDashboard()" style="width: 100%; margin-top: 10px;">
+                Start Dashboard
+            </button>
+            <button class="back-btn" onclick="showMainMenu()" style="width: 100%;">← Back</button>
         </div>
 
         <div class="game-code" id="gameCodeSection">
@@ -191,21 +334,49 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        window.goToDashboard = async function() {
+        let selectedPacks = ['BASE', 'HOLIDAY', 'PRIDE', 'AI', 'SCIENCE', 'FOOD', 'GAMING', 'SPORTS', 'MEDICAL', 'POLITICS', 'RELIGION', 'WORKPLACE', 'SOCIAL MEDIA', 'EDUCATION', 'TRAVEL'];
+
+        window.togglePack = function(element) {
+            const pack = element.dataset.pack;
+            
+            if (pack === 'BASE') {
+                // Base pack is always required
+                return;
+            }
+            
+            element.classList.toggle('selected');
+            
+            if (element.classList.contains('selected')) {
+                if (!selectedPacks.includes(pack)) {
+                    selectedPacks.push(pack);
+                }
+            } else {
+                selectedPacks = selectedPacks.filter(p => p !== pack);
+            }
+        };
+
+        window.showPackSelection = function() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('packSelection').style.display = 'block';
+        };
+
+        window.startDashboard = async function() {
             const gameCode = Math.random().toString(36).substr(2, 4).toUpperCase();
             
-            // Create game in Firebase
+            // Create game in Firebase with selected packs
             await set(ref(database, `games/${gameCode}`), {
                 host: true,
                 players: {},
                 gameState: 'waiting',
                 currentJudge: 0,
                 round: 0,
+                selectedPacks: selectedPacks,
                 createdAt: Date.now()
             });
             
             localStorage.setItem('gameCode', gameCode);
             localStorage.setItem('role', 'dashboard');
+            localStorage.setItem('selectedPacks', JSON.stringify(selectedPacks));
             window.location.href = 'dashboard.html';
         };
 
@@ -224,6 +395,7 @@
         window.showMainMenu = function() {
             document.getElementById('mainMenu').style.display = 'flex';
             document.getElementById('gameCodeSection').style.display = 'none';
+            document.getElementById('packSelection').style.display = 'none';
         };
 
         window.joinGame = async function() {
