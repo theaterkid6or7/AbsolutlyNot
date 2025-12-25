@@ -1,1 +1,80 @@
+let roomId = null;
+let cards = { CATALYST:[], BOOSTER:[], FUCKNO:[] };
 
+fetch("cards.txt")
+.then(res => res.text())
+.then(text => parseCards(text));
+
+function parseCards(text) {
+  let current = null;
+  text.split("\n").forEach(line => {
+    line = line.trim();
+    if (!line) return;
+
+    if (line.startsWith("[")) {
+      current = line.replace("[","").replace("]","").split("|")[0];
+    } else {
+      cards[current].push(line);
+    }
+  });
+}
+
+function generateCode() {
+  return "ABNO-" + Math.random().toString(36).substring(2,6).toUpperCase();
+}
+
+function createRoom() {
+  roomId = generateCode();
+  document.getElementById("roomCode").innerText = "ROOM CODE: " + roomId;
+
+  const packs = [...document.querySelectorAll("input:checked")].map(e=>e.value);
+
+  db.ref("rooms/"+roomId).set({
+    packs,
+    judgeIndex:0,
+    state:"waiting",
+    players:{}
+  });
+}
+
+function randomFrom(arr) {
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function startRound() {
+  const catalyst = randomFrom(cards.CATALYST);
+  const booster = randomFrom(cards.BOOSTER);
+
+  db.ref("rooms/"+roomId+"/round").set({
+    catalyst,
+    booster,
+    submissions:{}
+  });
+
+  document.getElementById("catalyst").innerText = catalyst;
+  document.getElementById("booster").innerText = booster;
+}
+
+db.ref("rooms").on("value", snap => {
+  if (!roomId) return;
+  const room = snap.val()[roomId];
+  if (!room || !room.round) return;
+
+  const subs = room.round.submissions || {};
+  const div = document.getElementById("subs");
+  div.innerHTML = "";
+
+  Object.entries(subs).forEach(([pid,text])=>{
+    const btn = document.createElement("button");
+    btn.innerText = text;
+    btn.onclick = ()=>selectWinner(pid);
+    div.appendChild(btn);
+  });
+});
+
+function selectWinner(playerId) {
+  const ref = db.ref("rooms/"+roomId);
+  ref.child("players/"+playerId+"/score").transaction(s => (s||0)+2);
+  ref.child("judgeIndex").transaction(j => j+1);
+  alert("Winner selected!");
+}
