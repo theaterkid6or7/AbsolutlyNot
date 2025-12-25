@@ -1,58 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Player – Absolutely Not</title>
-  <style>
-    body {
-      background: #000;
-      color: white;
-      font-family: Arial;
-      padding: 20px;
-    }
-    button {
-      padding: 15px;
-      margin: 10px 0;
-      width: 100%;
-    }
-  </style>
+<title>Player – Absolutely Not</title>
+<style>
+body {
+  background:#000;
+  color:white;
+  font-family:Arial;
+  padding:20px;
+}
+button {
+  width:100%;
+  padding:15px;
+  margin:10px 0;
+}
+</style>
 </head>
 <body>
 
-<h2>Join Game</h2>
-<input id="name" placeholder="Your Name">
-<button onclick="join()">Join</button>
+<h1>Join Game</h1>
+<input id="code" placeholder="ROOM CODE"><br>
+<input id="name" placeholder="NAME"><br>
+<button onclick="join()">JOIN</button>
 
-<h3>Pick Your Card</h3>
-<div id="cards"></div>
+<h2>Your Cards</h2>
+<div id="hand"></div>
 
-<script src="game.js"></script>
-<script>
-function join() {
-  const name = document.getElementById("name").value;
-  if (!name) return;
-  addPlayer(name);
-  alert("Joined!");
-}
-
-// placeholder submissions
-const cards = [
-  "Paid for by a streaming service",
-  "Approved by shareholders",
-  "Legally questionable"
-];
-
-const container = document.getElementById("cards");
-cards.forEach(card => {
-  const btn = document.createElement("button");
-  btn.textContent = card;
-  btn.onclick = () => {
-    localStorage.setItem("submission", card);
-    alert("Submitted!");
-  };
-  container.appendChild(btn);
-});
-</script>
-
+<script src="firebase.js"></script>
+<script src="player.js"></script>
 </body>
 </html>
-
