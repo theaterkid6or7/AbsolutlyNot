@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +12,7 @@
         }
 
         body {
-            font-family: 'Arial Black', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: white;
@@ -22,135 +21,154 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 15px;
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
         }
 
         .player-name {
-            font-size: 2em;
-            margin-bottom: 5px;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .game-code {
-            font-size: 1.2em;
-            opacity: 0.8;
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-weight: 500;
         }
 
         .status-banner {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 20px;
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.3em;
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .judge-banner {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 30px;
-            border-radius: 15px;
+            padding: 35px;
+            border-radius: 20px;
             text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.6em;
+            margin-bottom: 25px;
+            font-weight: 700;
+            box-shadow: 0 15px 40px rgba(240, 147, 251, 0.4);
         }
 
         .catalyst-display {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             color: #333;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 35px;
+            border-radius: 20px;
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.3em;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
         }
 
         .catalyst-label {
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: #667eea;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 15px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
         }
 
         .card {
-            background: #2d3436;
-            border: 3px solid #e74c3c;
-            border-radius: 15px;
-            padding: 25px;
-            min-height: 200px;
+            background: #1a1a1a;
+            border: 4px solid #e74c3c;
+            border-radius: 20px;
+            padding: 30px;
+            min-height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.15em;
             position: relative;
+            font-weight: 500;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(231, 76, 60, 0.5);
             border-color: #ff6b6b;
         }
 
         .card.selected {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-color: #fff;
-            transform: scale(1.05);
+            transform: scale(1.08);
+            box-shadow: 0 20px 60px rgba(240, 147, 251, 0.6);
         }
 
         .card.disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             pointer-events: none;
         }
 
         .card-type-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 12px;
+            left: 12px;
             background: #e74c3c;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.7em;
-            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.65em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .waiting-message {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 50px;
+            border-radius: 20px;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.6em;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
         }
 
         .submit-btn {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            padding: 20px 40px;
-            font-size: 1.3em;
+            padding: 25px 50px;
+            font-size: 1.4em;
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 25px;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .submit-btn:hover {
-            transform: scale(1.05);
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(79, 172, 254, 0.6);
         }
 
         .submit-btn:disabled {
@@ -159,99 +177,114 @@
         }
 
         .booster-selection {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             color: #333;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
         .booster-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .booster-option {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-size: 1.1em;
-        }
-
-        .booster-option:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .booster-option.selected {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            transform: scale(1.05);
-        }
-
-        .submitted-cards {
             display: flex;
             flex-direction: column;
             gap: 15px;
             margin-top: 20px;
         }
 
-        .submitted-card {
-            background: #2d3436;
-            border: 3px solid #e74c3c;
+        .booster-option {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
             padding: 25px;
             border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: center;
             font-size: 1.2em;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(240, 147, 251, 0.3);
+        }
+
+        .booster-option:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(240, 147, 251, 0.5);
+        }
+
+        .booster-option.selected {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            transform: scale(1.08);
+            box-shadow: 0 20px 50px rgba(79, 172, 254, 0.6);
+        }
+
+        .submitted-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .submitted-card {
+            background: #1a1a1a;
+            border: 4px solid #e74c3c;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.3em;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 500;
         }
 
         .submitted-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.5);
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
         }
 
         .winner-announcement {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 40px;
-            border-radius: 15px;
+            padding: 50px;
+            border-radius: 20px;
             text-align: center;
-            font-size: 2em;
-            margin: 20px 0;
+            font-size: 2.2em;
+            margin: 25px 0;
+            font-weight: 700;
+            box-shadow: 0 20px 60px rgba(240, 147, 251, 0.5);
             animation: pulse 1s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 20px 60px rgba(240, 147, 251, 0.5);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 25px 70px rgba(240, 147, 251, 0.7);
+            }
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="player-name" id="playerName">Player</div>
-        <div class="game-code">Game: <span id="gameCode">XXXX</span></div>
+        <div class="game-code">Game: <span id="gameCode">XXXX</span> <span id="connectionStatus" style="font-size: 0.8em;">●</span></div>
     </div>
 
-    <!-- Waiting Room -->
     <div id="waitingRoom">
         <div class="waiting-message">
-            Waiting for the game to start...<br>
-            <small style="font-size: 0.6em; opacity: 0.8;">The host will start the game soon</small>
+            ✓ Connected! Waiting for game to start...<br>
+            <small style="font-size: 0.6em; opacity: 0.8; font-weight: 400;">The host will start the game soon</small>
         </div>
     </div>
 
-    <!-- Judge View -->
-    <div id="judgeView" class="hidden" style="display: none;">
+    <div id="judgeView" class="hidden">
         <div class="judge-banner">
             👑 YOU ARE THE JUDGE! 👑<br>
-            <small style="font-size: 0.6em;">Pick a Booster card, then choose the best Fuck No card</small>
+            <small style="font-size: 0.6em; font-weight: 500;">Pick a Booster, then choose the best Fuck No</small>
         </div>
 
         <div class="catalyst-display">
@@ -259,30 +292,27 @@
             <div id="judgeCatalyst"></div>
         </div>
 
-        <!-- Booster Selection -->
         <div id="boosterSelection" class="booster-selection">
-            <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">
+            <div style="text-align: center; font-weight: 700; margin-bottom: 15px; font-size: 1.1em;">
                 SELECT A BOOSTER CARD:
             </div>
             <div class="booster-options" id="boosterOptions"></div>
         </div>
 
-        <!-- Submitted Cards View -->
-        <div id="submittedCardsView" class="hidden" style="display: none;">
+        <div id="submittedCardsView" class="hidden">
             <div class="catalyst-display">
                 <div class="catalyst-label">Selected Booster</div>
                 <div id="selectedBooster"></div>
             </div>
             
-            <div style="text-align: center; font-size: 1.3em; margin: 20px 0;">
-                Click each card to reveal, then pick your favorite:
+            <div style="text-align: center; font-size: 1.4em; margin: 25px 0; font-weight: 600;">
+                Tap each card to reveal, then pick your favorite:
             </div>
             <div class="submitted-cards" id="submittedCards"></div>
         </div>
     </div>
 
-    <!-- Player View -->
-    <div id="playerView" class="hidden" style="display: none;">
+    <div id="playerView" class="hidden">
         <div class="status-banner" id="statusBanner">
             Waiting for judge to pick a Booster...
         </div>
@@ -293,7 +323,7 @@
         </div>
 
         <div id="cardSelection">
-            <div style="text-align: center; margin-bottom: 20px; font-size: 1.2em;">
+            <div style="text-align: center; margin-bottom: 25px; font-size: 1.3em; font-weight: 600;">
                 SELECT YOUR FUCK NO CARD:
             </div>
             <div class="cards-grid" id="playerCards"></div>
@@ -302,72 +332,132 @@
             </button>
         </div>
 
-        <div id="waitingForJudge" class="hidden" style="display: none;">
+        <div id="waitingForJudge" class="hidden">
             <div class="waiting-message">
                 Card submitted! Waiting for judge...<br>
-                <small style="font-size: 0.6em; opacity: 0.8;">The judge is reading all submissions</small>
+                <small style="font-size: 0.6em; opacity: 0.8; font-weight: 400;">The judge is reading all submissions</small>
             </div>
         </div>
     </div>
 
-    <!-- Winner Announcement -->
-    <div id="winnerAnnouncement" class="hidden" style="display: none;">
+    <div id="winnerAnnouncement" class="hidden">
         <div class="winner-announcement">
             🎉 <span id="winnerText"></span> 🎉
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtEkZJ_BsxGJC88vHp3ikPnGn9WJKdzH0",
+            authDomain: "absolutlynot-fe034.firebaseapp.com",
+            databaseURL: "https://absolutlynot-fe034-default-rtdb.firebaseio.com",
+            projectId: "absolutlynot-fe034",
+            storageBucket: "absolutlynot-fe034.firebasestorage.app",
+            messagingSenderId: "655001720436",
+            appId: "1:655001720436:web:f2396092571b8d17e26321",
+            measurementId: "G-M3YMSX86D3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
         const playerData = {
             name: localStorage.getItem('playerName') || 'Player',
             gameCode: localStorage.getItem('gameCode') || 'XXXX',
+            playerId: null,
             isJudge: false,
             selectedCard: null,
             hand: []
         };
 
-        const fuckNos = [
-            "Paid for by OnlyFans",
-            "Sponsored by Pornhub Premium",
-            "Featuring a live sex demonstration",
-            "With an open bar of hard liquor",
-            "Including a strip tease performance",
-            "With edibles as party favors",
-            "Featuring your embarrassing search history on display",
-            "With your drunk texts read aloud",
-            "Including a demonstration with sex toys",
-            "Hosted by your ex",
-            "With everyone's browser history revealed",
-            "Featuring interpretive pole dancing",
-            "Including your Tinder profile projected on screen",
-            "With a glory hole in the bathroom",
-            "Sponsored by Bad Dragon",
-            "Including a fetish fashion show",
-            "With your nudes accidentally sent to everyone",
-            "Featuring lines of cocaine on the refreshment table",
-            "With mandatory Jell-O wrestling",
-            "Including a 'guess that STD' game",
-            "With a wet t-shirt contest",
-            "Featuring body shots off strangers",
-            "Including a penis-shaped cake",
-            "With your mom's Tinder matches revealed"
-        ];
-
-        const boosters = [
-            "Hosted by a mega corporation",
-            "Sponsored by the government",
-            "Filmed for reality TV",
-            "Live streamed on Twitch",
-            "Paid for by your grandma",
-            "Featuring surprise celebrity guests",
-            "With mandatory attendance",
-            "Recorded for posterity",
-            "Broadcast on national television",
-            "With your entire extended family watching"
-        ];
+        const fuckNos = [];
+        const boosters = [];
 
         document.getElementById('playerName').textContent = playerData.name;
         document.getElementById('gameCode').textContent = playerData.gameCode;
+
+        // Join the game in Firebase
+        const gameRef = ref(database, `games/${playerData.gameCode}`);
+        const playersRef = ref(database, `games/${playerData.gameCode}/players`);
+        
+        // Add player to game
+        const newPlayerRef = push(playersRef);
+        playerData.playerId = newPlayerRef.key;
+        
+        set(newPlayerRef, {
+            name: playerData.name,
+            score: 0,
+            joinedAt: Date.now()
+        }).then(() => {
+            // Show connected status
+            const statusDot = document.getElementById('connectionStatus');
+            statusDot.style.color = '#4CAF50';
+            statusDot.title = 'Connected';
+        }).catch((error) => {
+            console.error('Failed to join game:', error);
+            alert('Failed to join game. Please try again.');
+        });
+
+        // Listen for game state changes
+        let gameStarted = false;
+        onValue(gameRef, (snapshot) => {
+            const gameState = snapshot.val();
+            if (!gameState) return;
+            
+            // Game started
+            if (gameState.gameState === 'playing' && !gameStarted) {
+                gameStarted = true;
+                document.getElementById('waitingRoom').classList.add('hidden');
+                
+                // Check if we're the judge
+                const players = gameState.players ? Object.entries(gameState.players).map(([id, p]) => ({id, ...p})) : [];
+                const myIndex = players.findIndex(p => p.name === playerData.name);
+                const isJudge = myIndex === (gameState.currentJudgeIndex || 0);
+                
+                startRound(isJudge, gameState.currentCatalyst || "A school mental health meeting");
+            }
+            
+            // Round updates
+            if (gameStarted && gameState.currentCatalyst) {
+                const players = gameState.players ? Object.entries(gameState.players).map(([id, p]) => ({id, ...p})) : [];
+                const myIndex = players.findIndex(p => p.name === playerData.name);
+                const isJudge = myIndex === (gameState.currentJudgeIndex || 0);
+                
+                // Only restart round if catalyst changed
+                if (gameState.currentCatalyst !== document.getElementById('playerCatalyst').textContent &&
+                    gameState.currentCatalyst !== document.getElementById('judgeCatalyst').textContent) {
+                    startRound(isJudge, gameState.currentCatalyst);
+                }
+            }
+        });
+
+        async function loadCards() {
+            try {
+                const response = await fetch('cards.txt');
+                const text = await response.text();
+                const lines = text.split('\n');
+                
+                let currentType = '';
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (line === '[BOOSTERS]') {
+                        currentType = 'booster';
+                    } else if (line === '[FUCKNOS]') {
+                        currentType = 'fuckno';
+                    } else if (line && !line.startsWith('[')) {
+                        if (currentType === 'booster') boosters.push(line);
+                        else if (currentType === 'fuckno') fuckNos.push(line);
+                    }
+                });
+            } catch (error) {
+                console.log('Using default cards');
+                boosters.push("Hosted by a mega corporation", "Sponsored by the government", "Filmed for reality TV");
+                fuckNos.push("Paid for by OnlyFans", "Sponsored by Pornhub Premium", "Featuring a live sex demonstration");
+            }
+        }
 
         function dealHand() {
             playerData.hand = [];
@@ -381,8 +471,8 @@
             playerData.isJudge = isJudge;
             playerData.selectedCard = null;
             
-            document.getElementById('waitingRoom').style.display = 'none';
-            document.getElementById('winnerAnnouncement').style.display = 'none';
+            document.getElementById('waitingRoom').classList.add('hidden');
+            document.getElementById('winnerAnnouncement').classList.add('hidden');
 
             if (isJudge) {
                 showJudgeView(catalyst);
@@ -392,11 +482,10 @@
         }
 
         function showJudgeView(catalyst) {
-            document.getElementById('judgeView').style.display = 'block';
-            document.getElementById('playerView').style.display = 'none';
+            document.getElementById('judgeView').classList.remove('hidden');
+            document.getElementById('playerView').classList.add('hidden');
             document.getElementById('judgeCatalyst').textContent = catalyst;
             
-            // Show booster selection
             const options = document.getElementById('boosterOptions');
             options.innerHTML = '';
             
@@ -421,19 +510,18 @@
             element.classList.add('selected');
             
             setTimeout(() => {
-                document.getElementById('boosterSelection').style.display = 'none';
+                document.getElementById('boosterSelection').classList.add('hidden');
                 showSubmittedCards(booster);
-            }, 1000);
+            }, 1200);
         }
 
         function showSubmittedCards(booster) {
             document.getElementById('selectedBooster').textContent = booster;
-            document.getElementById('submittedCardsView').style.display = 'block';
+            document.getElementById('submittedCardsView').classList.remove('hidden');
             
             const container = document.getElementById('submittedCards');
             container.innerHTML = '';
             
-            // Simulate 3 submitted cards
             for (let i = 0; i < 3; i++) {
                 const card = fuckNos[Math.floor(Math.random() * fuckNos.length)];
                 const div = document.createElement('div');
@@ -450,11 +538,11 @@
         }
 
         function showPlayerView(catalyst) {
-            document.getElementById('playerView').style.display = 'block';
-            document.getElementById('judgeView').style.display = 'none';
+            document.getElementById('playerView').classList.remove('hidden');
+            document.getElementById('judgeView').classList.add('hidden');
             document.getElementById('playerCatalyst').textContent = catalyst;
-            document.getElementById('cardSelection').style.display = 'block';
-            document.getElementById('waitingForJudge').style.display = 'none';
+            document.getElementById('cardSelection').classList.remove('hidden');
+            document.getElementById('waitingForJudge').classList.add('hidden');
             
             dealHand();
             displayCards();
@@ -485,39 +573,36 @@
             document.getElementById('submitBtn').disabled = false;
         }
 
-        function submitCard() {
+        window.submitCard = function() {
             if (playerData.selectedCard !== null) {
-                document.getElementById('cardSelection').style.display = 'none';
-                document.getElementById('waitingForJudge').style.display = 'block';
+                document.getElementById('cardSelection').classList.add('hidden');
+                document.getElementById('waitingForJudge').classList.remove('hidden');
                 
-                // Simulate round ending
                 setTimeout(() => {
                     const winner = Math.random() > 0.5 ? playerData.name : 'Another Player';
                     announceWinner(winner);
                 }, 5000);
             }
-        }
+        };
 
         function announceWinner(winner) {
-            document.getElementById('judgeView').style.display = 'none';
-            document.getElementById('playerView').style.display = 'none';
-            document.getElementById('winnerAnnouncement').style.display = 'block';
+            document.getElementById('judgeView').classList.add('hidden');
+            document.getElementById('playerView').classList.add('hidden');
+            document.getElementById('winnerAnnouncement').classList.remove('hidden');
             
             const text = winner === playerData.name ? 'YOU WIN!' : `${winner} WINS!`;
             document.getElementById('winnerText').textContent = text;
             
-            // Start next round
             setTimeout(() => {
                 const isJudge = Math.random() > 0.5;
-                const catalyst = "A new catalyst appears";
+                const catalyst = "A new round begins";
                 startRound(isJudge, catalyst);
-            }, 3000);
+            }, 4000);
         }
 
-        // Simulate game start after 3 seconds
-        setTimeout(() => {
-            startRound(false, "A school mental health meeting");
-        }, 3000);
+        loadCards();
+
+        // Remove the auto-start simulation at the bottom
     </script>
 </body>
 </html>
