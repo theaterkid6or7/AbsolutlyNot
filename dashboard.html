@@ -410,6 +410,7 @@
             players: [],
             currentJudgeIndex: 0,
             round: 0,
+            selectedPacks: JSON.parse(localStorage.getItem('selectedPacks') || '["BASE"]'),
             catalysts: [],
             boosters: [],
             fuckNos: []
@@ -472,20 +473,28 @@
                 const lines = text.split('\n');
                 
                 let currentType = '';
+                let currentPack = '';
+                
                 lines.forEach(line => {
                     line = line.trim();
-                    if (line === '[CATALYSTS]') {
-                        currentType = 'catalyst';
-                    } else if (line === '[BOOSTERS]') {
-                        currentType = 'booster';
-                    } else if (line === '[FUCKNOS]') {
-                        currentType = 'fuckno';
+                    
+                    // Check for section headers like [CATALYSTS:BASE]
+                    if (line.startsWith('[') && line.endsWith(']')) {
+                        const parts = line.slice(1, -1).split(':');
+                        currentType = parts[0].toLowerCase();
+                        currentPack = parts[1] || 'BASE';
                     } else if (line && !line.startsWith('[')) {
-                        if (currentType === 'catalyst') gameData.catalysts.push(line);
-                        else if (currentType === 'booster') gameData.boosters.push(line);
-                        else if (currentType === 'fuckno') gameData.fuckNos.push(line);
+                        // Only add cards from selected packs
+                        if (gameData.selectedPacks.includes(currentPack)) {
+                            if (currentType === 'catalysts') gameData.catalysts.push(line);
+                            else if (currentType === 'boosters') gameData.boosters.push(line);
+                            else if (currentType === 'fucknos') gameData.fuckNos.push(line);
+                        }
                     }
                 });
+                
+                console.log(`Loaded packs: ${gameData.selectedPacks.join(', ')}`);
+                console.log(`Total cards - Catalysts: ${gameData.catalysts.length}, Boosters: ${gameData.boosters.length}, Fuck Nos: ${gameData.fuckNos.length}`);
             } catch (error) {
                 console.log('Using default cards');
                 gameData.catalysts = ["A school mental health meeting", "A children's birthday party", "A corporate team building exercise"];
