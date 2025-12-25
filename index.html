@@ -173,38 +173,81 @@
         </div>
     </div>
 
-    <script>
-        function goToDashboard() {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtEkZJ_BsxGJC88vHp3ikPnGn9WJKdzH0",
+            authDomain: "absolutlynot-fe034.firebaseapp.com",
+            databaseURL: "https://absolutlynot-fe034-default-rtdb.firebaseio.com",
+            projectId: "absolutlynot-fe034",
+            storageBucket: "absolutlynot-fe034.firebasestorage.app",
+            messagingSenderId: "655001720436",
+            appId: "1:655001720436:web:f2396092571b8d17e26321",
+            measurementId: "G-M3YMSX86D3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        window.goToDashboard = async function() {
             const gameCode = Math.random().toString(36).substr(2, 4).toUpperCase();
+            
+            // Create game in Firebase
+            await set(ref(database, `games/${gameCode}`), {
+                host: true,
+                players: {},
+                gameState: 'waiting',
+                currentJudge: 0,
+                round: 0,
+                createdAt: Date.now()
+            });
+            
             localStorage.setItem('gameCode', gameCode);
             localStorage.setItem('role', 'dashboard');
             window.location.href = 'dashboard.html';
-        }
+        };
 
-        function showGameCode() {
+        window.showGameCode = function() {
             document.getElementById('mainMenu').style.display = 'none';
             document.getElementById('gameCodeSection').style.display = 'block';
-        }
+            
+            // Auto-select the input field
+            setTimeout(() => {
+                const input = document.getElementById('gameCodeInput');
+                input.focus();
+                input.select();
+            }, 100);
+        };
 
-        function showMainMenu() {
+        window.showMainMenu = function() {
             document.getElementById('mainMenu').style.display = 'flex';
             document.getElementById('gameCodeSection').style.display = 'none';
-        }
+        };
 
-        function joinGame() {
+        window.joinGame = async function() {
             const code = document.getElementById('gameCodeInput').value.toUpperCase();
             if (code.length === 4) {
-                localStorage.setItem('gameCode', code);
-                localStorage.setItem('role', 'player');
-                const playerName = prompt('Enter your name:');
-                if (playerName) {
-                    localStorage.setItem('playerName', playerName);
-                    window.location.href = 'player.html';
+                // Check if game exists
+                const gameRef = ref(database, `games/${code}`);
+                const snapshot = await get(gameRef);
+                
+                if (snapshot.exists()) {
+                    const playerName = prompt('Enter your name:');
+                    if (playerName) {
+                        localStorage.setItem('gameCode', code);
+                        localStorage.setItem('role', 'player');
+                        localStorage.setItem('playerName', playerName);
+                        window.location.href = 'player.html';
+                    }
+                } else {
+                    alert('Game not found! Please check the code.');
                 }
             } else {
                 alert('Please enter a valid 4-character game code');
             }
-        }
+        };
     </script>
 </body>
 </html>
