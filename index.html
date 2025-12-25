@@ -301,6 +301,56 @@
                     <div class="pack-name">Travel</div>
                     <div class="pack-count">30 cards</div>
                 </div>
+                <div class="pack-option selected" data-pack="MUSIC" onclick="togglePack(this)">
+                    <div class="pack-emoji">🎵</div>
+                    <div class="pack-name">Music</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="DATING" onclick="togglePack(this)">
+                    <div class="pack-emoji">💘</div>
+                    <div class="pack-name">Dating</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="MOVIES" onclick="togglePack(this)">
+                    <div class="pack-emoji">🎬</div>
+                    <div class="pack-name">Movies</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="FASHION" onclick="togglePack(this)">
+                    <div class="pack-emoji">👗</div>
+                    <div class="pack-name">Fashion</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="NATURE" onclick="togglePack(this)">
+                    <div class="pack-emoji">🌲</div>
+                    <div class="pack-name">Nature</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="PETS" onclick="togglePack(this)">
+                    <div class="pack-emoji">🐶</div>
+                    <div class="pack-name">Pets</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="CONSPIRACY" onclick="togglePack(this)">
+                    <div class="pack-emoji">👽</div>
+                    <div class="pack-name">Conspiracy</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="DRUGS" onclick="togglePack(this)">
+                    <div class="pack-emoji">💊</div>
+                    <div class="pack-name">Drugs</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="CRIME" onclick="togglePack(this)">
+                    <div class="pack-emoji">🚔</div>
+                    <div class="pack-name">Crime</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
+                <div class="pack-option selected" data-pack="FINANCE" onclick="togglePack(this)">
+                    <div class="pack-emoji">💰</div>
+                    <div class="pack-name">Finance</div>
+                    <div class="pack-count">30 cards</div>
+                </div>
             </div>
             <button class="dashboard-btn" onclick="startDashboard()" style="width: 100%; margin-top: 10px;">
                 Start Dashboard
@@ -334,7 +384,7 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        let selectedPacks = ['BASE', 'HOLIDAY', 'PRIDE', 'AI', 'SCIENCE', 'FOOD', 'GAMING', 'SPORTS', 'MEDICAL', 'POLITICS', 'RELIGION', 'WORKPLACE', 'SOCIAL MEDIA', 'EDUCATION', 'TRAVEL'];
+        let selectedPacks = ['BASE', 'HOLIDAY', 'PRIDE', 'AI', 'SCIENCE', 'FOOD', 'GAMING', 'SPORTS', 'MEDICAL', 'POLITICS', 'RELIGION', 'WORKPLACE', 'SOCIAL MEDIA', 'EDUCATION', 'TRAVEL', 'MUSIC', 'DATING', 'MOVIES', 'FASHION', 'NATURE', 'PETS', 'CONSPIRACY', 'DRUGS', 'CRIME', 'FINANCE'];
 
         window.togglePack = function(element) {
             const pack = element.dataset.pack;
