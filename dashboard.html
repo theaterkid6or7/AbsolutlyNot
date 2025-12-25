@@ -469,11 +469,17 @@
         async function loadCards() {
             try {
                 const response = await fetch('cards.txt');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cards.txt');
+                }
+                
                 const text = await response.text();
                 const lines = text.split('\n');
                 
                 let currentType = '';
                 let currentPack = '';
+                
+                console.log('Selected packs:', gameData.selectedPacks);
                 
                 lines.forEach(line => {
                     line = line.trim();
@@ -493,10 +499,15 @@
                     }
                 });
                 
-                console.log(`Loaded packs: ${gameData.selectedPacks.join(', ')}`);
-                console.log(`Total cards - Catalysts: ${gameData.catalysts.length}, Boosters: ${gameData.boosters.length}, Fuck Nos: ${gameData.fuckNos.length}`);
+                console.log(`✅ Loaded packs: ${gameData.selectedPacks.join(', ')}`);
+                console.log(`📊 Total cards - Catalysts: ${gameData.catalysts.length}, Boosters: ${gameData.boosters.length}, Fuck Nos: ${gameData.fuckNos.length}`);
+                
+                if (gameData.catalysts.length === 0 || gameData.boosters.length === 0 || gameData.fuckNos.length === 0) {
+                    throw new Error('No cards loaded from selected packs');
+                }
             } catch (error) {
-                console.log('Using default cards');
+                console.error('Error loading cards:', error);
+                console.log('Using default fallback cards');
                 gameData.catalysts = ["A school mental health meeting", "A children's birthday party", "A corporate team building exercise"];
                 gameData.boosters = ["Hosted by a mega corporation", "Sponsored by the government", "Filmed for reality TV"];
                 gameData.fuckNos = ["Paid for by OnlyFans", "Sponsored by Pornhub Premium", "Featuring a live sex demonstration"];
@@ -559,18 +570,39 @@
                 return;
             }
             
-            await update(ref(database, `games/${gameData.code}`), {
-                gameState: 'playing',
-                currentJudgeIndex: 0,
-                round: 0
-            });
+            if (gameData.catalysts.length === 0 || gameData.boosters.length === 0 || gameData.fuckNos.length === 0) {
+                alert('Error loading cards! Please refresh and try again.');
+                console.error('Card loading failed:', {
+                    catalysts: gameData.catalysts.length,
+                    boosters: gameData.boosters.length,
+                    fuckNos: gameData.fuckNos.length
+                });
+                return;
+            }
             
-            document.getElementById('waitingRoom').classList.add('hidden');
-            document.getElementById('gamePlay').classList.remove('hidden');
-            startNewRound();
+            try {
+                await update(ref(database, `games/${gameData.code}`), {
+                    gameState: 'playing',
+                    currentJudgeIndex: 0,
+                    round: 0
+                });
+                
+                document.getElementById('waitingRoom').classList.add('hidden');
+                document.getElementById('gamePlay').classList.remove('hidden');
+                startNewRound();
+            } catch (error) {
+                console.error('Error starting game:', error);
+                alert('Failed to start game. Please try again.');
+            }
         };
 
         function startNewRound() {
+            if (gameData.catalysts.length === 0 || gameData.boosters.length === 0 || gameData.fuckNos.length === 0) {
+                console.error('Cannot start round - cards not loaded!');
+                alert('Error: Cards not loaded properly. Please refresh the page.');
+                return;
+            }
+            
             gameData.round++;
             submittedCards = [];
             
@@ -585,6 +617,8 @@
                 currentCatalyst: currentCatalyst,
                 currentJudgeIndex: gameData.currentJudgeIndex,
                 round: gameData.round
+            }).catch(error => {
+                console.error('Error updating Firebase:', error);
             });
             
             document.getElementById('boosterCard').classList.add('hidden');
