@@ -1,4 +1,4 @@
-[CATALYSTS]
+[CATALYSTS:BASE]
 A school mental health meeting
 A children's birthday party
 A corporate team building exercise
@@ -14,8 +14,23 @@ A wedding reception
 A funeral service
 A baby shower
 A high school reunion
+A parent-teacher conference
+A gender reveal party
+A college orientation
+A motivational speaking event
+A first date
+A family dinner with your in-laws
+A divorce mediation
+A citizenship ceremony
+A cancer support group
+A child custody hearing
+A retirement party
+A police ride-along
+An adoption hearing
+A Make-A-Wish event
+A hospice care visit
 
-[BOOSTERS]
+[BOOSTERS:BASE]
 Hosted by a mega corporation
 Sponsored by the government
 Filmed for reality TV
@@ -31,8 +46,23 @@ Sponsored by Disney
 Featuring a documentary crew
 With your boss present
 Posted to TikTok
+Rated PG-13
+Featured in the local newspaper
+Going viral on Twitter for
+With your parents in the front row
+Reviewed by The New York Times
+Catered by Gordon Ramsay
+Hosted at the White House
+With free t-shirts for everyone
+Featuring a marching band
+With a special guest appearance by Oprah
+Endorsed by the Pope
+Monetized on YouTube
+Winning a Webby Award
+Featured in Vogue magazine
+With paparazzi everywhere
 
-[FUCKNOS]
+[FUCKNOS:BASE]
 Paid for by OnlyFans
 Sponsored by Pornhub Premium
 Featuring a live sex demonstration
@@ -60,6 +90,510 @@ With your mom's Tinder matches revealed
 Sponsored by Ashley Madison
 With a stripper popping out of something
 Including karaoke versions of explicit rap songs
-Featuring a amateur porn screening
+Featuring amateur porn screening
 With everyone's kinks revealed
 Including a game of strip poker
+
+[CATALYSTS:HOLIDAY]
+A Thanksgiving dinner with extended family
+A Christmas morning with young children
+An Easter egg hunt at church
+A Hanukkah celebration at temple
+A New Year's Eve countdown party
+A Valentine's Day dinner for two
+A Halloween costume contest
+A Mother's Day brunch
+A Father's Day BBQ cookout
+A Fourth of July fireworks show
+
+[BOOSTERS:HOLIDAY]
+Sponsored by Hallmark
+With Mariah Carey performing live
+Featuring mall Santa
+Broadcast on the Hallmark Channel
+With an ugly sweater competition
+Catered by your racist grandma
+With mistletoe everywhere
+Featuring carolers at the door
+With a live nativity scene
+Sponsored by Cupid himself
+
+[FUCKNOS:HOLIDAY]
+With Grandma twerking to Mariah Carey
+Featuring Elf on the Shelf in compromising positions
+Including Secret Santa gifts that are way too personal
+With drunk relatives fighting about politics
+Featuring Santa's OnlyFans reveal
+Including an ugly sweater that's TOO ugly
+With fruitcake used as a weapon
+Featuring your family learning what "Daddy" really means
+Including debates that end in fist fights
+With carolers singing WAP
+
+[CATALYSTS:PRIDE]
+A Pride parade in a conservative town
+A coming out conversation with parents
+A Pride month workplace celebration
+An LGBTQ+ youth support group
+A marriage equality celebration party
+A Drag brunch performance
+A Trans Day of Visibility event
+A queer book club meeting
+A gay wedding ceremony
+A gender reveal (the real kind)
+
+[BOOSTERS:PRIDE]
+Sponsored by Grindr
+Featured on RuPaul's Drag Race
+With rainbow decorations everywhere
+Sponsored by Skittles during Pride Month
+Hosted by a straight ally
+With corporate rainbow-washing
+Featuring voguing lessons
+Sponsored by Subaru
+With a gender-neutral bathroom
+Live from The Abbey in WeHo
+
+[FUCKNOS:PRIDE]
+With your conservative uncle asking invasive questions
+Featuring straight people making it about themselves
+Including performative wokeness speeches
+With someone asking "when did you choose to be gay?"
+Featuring unsolicited coming out advice
+Including "I have a gay friend" stories
+With rainbow capitalism at its peak
+Featuring homophobic protesters outside
+Including your dad's cringe ally moment
+With pronoun discourse getting heated
+
+[CATALYSTS:AI]
+A ChatGPT product launch event
+An AI ethics committee hearing
+A robot unveiling ceremony
+A tech startup pitch competition
+An AI art gallery opening
+A self-driving car demonstration
+A virtual reality expo
+A deepfake detection seminar
+An automated customer service rollout
+A cyborg rights protest
+
+[BOOSTERS:AI]
+Hosted by Elon Musk
+Funded by OpenAI
+Analyzed by ChatGPT in real-time
+With AI-generated artwork everywhere
+Featuring deepfake celebrities
+Sponsored by whoever's winning the AI race
+With Alexa as the DJ
+Live-coded by GitHub Copilot
+Judged by an algorithm
+Featuring Boston Dynamics robots
+
+[FUCKNOS:AI]
+With robots gaining sentience mid-event
+Featuring AI-generated deepfakes of everyone
+Including ChatGPT roasting attendees live
+With your AI assistant revealing your secrets
+Featuring the singularity happening during dessert
+Including AI-generated porn of the attendees
+With your smart home rebelling
+Featuring your Tesla's autopilot malfunctioning
+Including robots unionizing and striking
+With AI writing better speeches than the humans
+
+[CATALYSTS:SCIENCE]
+A science fair for middle schoolers
+A vaccine trial recruitment session
+A climate change conference
+A museum of natural history gala
+A TED Talk about breakthrough research
+A genetic testing results reveal party
+An archaeological excavation tour
+A chemistry lab open house
+A space shuttle launch viewing
+A Nobel Prize award ceremony
+
+[BOOSTERS:SCIENCE]
+Hosted by Neil deGrasse Tyson
+Funded by NASA
+Peer-reviewed and published in Nature
+Featured on Bill Nye's show
+Sponsored by Pfizer
+With a particle accelerator demo
+Live from the International Space Station
+Endorsed by Stephen Hawking's estate
+Winning the Nobel Prize for
+Featured in Scientific American
+
+[FUCKNOS:SCIENCE]
+With the experiment going horribly wrong
+Featuring unexpected radiation exposure
+Including a chemical spill evacuation
+With lab results that disprove everything
+Featuring organs in jars as centerpieces
+Including a pandemic starting at the venue
+With test subjects escaping
+Featuring unethical human experimentation
+Including a nuclear meltdown
+With peer review being absolutely savage
+
+[CATALYSTS:FOOD]
+A cooking competition show taping
+A restaurant grand opening
+A food blogger meetup
+A wine tasting event
+A farmers market festival
+A celebrity chef book signing
+A molecular gastronomy demonstration
+A food truck rally
+A competitive eating contest
+A farm-to-table dinner experience
+
+[BOOSTERS:FOOD]
+Catered by Gordon Ramsay
+Sponsored by McDonald's
+Featured on the Food Network
+Judged by Gordon Ramsay
+With Guy Fieri hosting
+Sponsored by Taco Bell
+Featured on Hot Ones
+With molecular gastronomy elements
+Catered by your drunk uncle
+Winning a Michelin star for
+
+[FUCKNOS:FOOD]
+With food poisoning odds at 50%
+Featuring a rat in the kitchen reveal
+Including expired ingredients knowingly used
+With the chef not washing their hands
+Featuring mystery meat that's still moving
+Including a health code violation speedrun
+With someone finding a tooth in their food
+Featuring milk that expired in 2019
+Including a cockroach in the birthday cake
+With gas station sushi as the main course
+
+[CATALYSTS:GAMING]
+An esports tournament grand finals
+A gaming convention panel
+A Twitch streamer meetup
+A video game launch party
+A retro arcade opening night
+A D&D campaign session
+A Pokemon card tournament
+A LAN party at someone's house
+A game developer conference
+A speedrunning marathon charity stream
+
+[BOOSTERS:GAMING]
+Sponsored by Mountain Dew and Doritos
+Streamed on Twitch with 100k viewers
+Featuring surprise Ninja appearance
+With RGB lighting everywhere
+Hosted by Pokimane
+Sponsored by Raid Shadow Legends
+With loot boxes as prizes
+Featured on IGN
+Winning Game of the Year for
+With a gaming chair giveaway
+
+[FUCKNOS:GAMING]
+With swatting happening mid-stream
+Featuring gamers who haven't showered in days
+Including a heated gamer moment caught live
+With your Discord kitten drama exposed
+Featuring body pillows as seating
+Including mountain dew and sweat smell
+With League of Legends voice chat leaked
+Featuring your cringe Discord messages displayed
+Including your Steam library playtime revealed
+With RGB lights causing seizures
+
+[CATALYSTS:SPORTS]
+A Super Bowl watch party
+A little league baseball game
+A college football rivalry game
+A professional athlete retirement ceremony
+A youth soccer tournament
+A marathon finish line celebration
+A sports hall of fame induction
+A boxing match weigh-in
+A Olympic Games opening ceremony
+A fantasy football draft party
+
+[BOOSTERS:SPORTS]
+Broadcast on ESPN
+Sponsored by Nike
+Featuring Tom Brady as guest speaker
+With Gatorade showers for everyone
+Hosted by LeBron James
+Featuring the kiss cam
+With foam fingers for all attendees
+Broadcast during March Madness
+Winning the championship trophy for
+Featured in Sports Illustrated
+
+[FUCKNOS:SPORTS]
+With a streaker running across the field
+Featuring a brawl in the stands
+Including performance-enhancing drugs revealed
+With a referee being openly bribed
+Featuring a wardrobe malfunction on jumbotron
+Including fans throwing batteries
+With a coach having a meltdown
+Featuring players taking a knee controversially
+Including a deflated balls scandal
+With gambling debts being collected violently
+
+[CATALYSTS:MEDICAL]
+A patient support group meeting
+A medical conference keynote
+A hospital charity gala
+A blood drive at work
+A pharmaceutical sales presentation
+A medical school graduation
+A wellness retreat weekend
+A therapy group session
+A vaccination clinic opening
+A health insurance enrollment session
+
+[BOOSTERS:MEDICAL]
+Sponsored by Pfizer
+Hosted at the Mayo Clinic
+Featured in the New England Journal of Medicine
+With free flu shots for everyone
+Endorsed by Dr. Oz
+Sponsored by WebMD
+With a pharmaceutical rep presenting
+Covered by your insurance (barely)
+Featuring holistic medicine influencers
+Broadcast on Grey's Anatomy
+
+[FUCKNOS:MEDICAL]
+With HIPAA violations happening live
+Featuring your embarrassing medical history leaked
+Including a malpractice lawsuit filed mid-event
+With essential oils as the only treatment
+Featuring an unqualified surgeon operating drunk
+Including antivaxxers protesting inside
+With your therapy notes read aloud
+Featuring a surprise STD diagnosis
+Including medical debt collectors showing up
+With cadavers as table decorations
+
+[CATALYSTS:POLITICS]
+A presidential debate watch party
+A town hall meeting with local officials
+A political campaign rally
+A voting rights demonstration
+A Supreme Court decision announcement
+A candidate fundraising dinner
+A political podcast recording
+A White House press briefing
+A constitutional convention
+A partisan protest march
+
+[BOOSTERS:POLITICS]
+Broadcast on CNN and Fox News simultaneously
+Hosted at the Capitol Building
+With Secret Service everywhere
+Sponsored by political action committees
+Featuring sitting senators
+With protesters outside
+Live fact-checked in real-time
+Trending #1 on Twitter Politics
+With the White House press corps
+Deciding the next election
+
+[FUCKNOS:POLITICS]
+With a politician's affair exposed live
+Featuring a racist tweet being discovered
+Including a Watergate-level scandal breaking
+With lobbyists bribing people openly
+Featuring a candidate having a public meltdown
+Including leaked emails read aloud
+With QAnon supporters interrupting
+Featuring January 6th footage being praised
+Including campaign finance violations
+With a politician being led away in handcuffs
+
+[CATALYSTS:RELIGION]
+A Sunday church service
+A youth group lock-in
+A religious wedding ceremony
+A baptism celebration
+A Bar/Bat Mitzvah
+A mosque community iftar
+A meditation retreat
+A religious conversion ceremony
+A faith-based recovery meeting
+A seminary graduation
+
+[BOOSTERS:RELIGION]
+Blessed by the Pope
+Featured in the Bible Belt
+With a megachurch pastor hosting
+Broadcast on Christian TV
+Sponsored by Chick-fil-A
+With mandatory prayer sessions
+Featuring speaking in tongues
+Live from the Vatican
+With faith healing demonstrations
+Endorsed by Joel Osteen
+
+[FUCKNOS:RELIGION]
+With a priest's scandal being exposed
+Featuring aggressive proselytizing
+Including exorcisms gone wrong
+With cult recruitment happening openly
+Featuring church funds embezzlement revealed
+Including extremely homophobic sermons
+With snake handling ending badly
+Featuring religious trauma being triggered
+Including tithing pressure tactics
+With child abuse coverups being discussed
+
+[CATALYSTS:WORKPLACE]
+A quarterly earnings call
+An employee performance review
+A sexual harassment training
+A company holiday party
+A new CEO announcement
+A mass layoff notification meeting
+A workplace diversity seminar
+A team building trust fall exercise
+An employee of the month ceremony
+A return-to-office mandate meeting
+
+[BOOSTERS:WORKPLACE]
+Hosted by HR
+With your entire department watching
+Recorded for the company archives
+Featuring the CEO giving a speech
+With mandatory fun activities
+Broadcast to all offices globally
+With pizza as the only compensation
+Featured on LinkedIn
+With synergy and paradigm shifts
+Deciding promotions and raises
+
+[FUCKNOS:WORKPLACE]
+With layoffs announced via Zoom
+Featuring your boss drunk and inappropriate
+Including hostile work environment complaints ignored
+With union busting tactics on display
+Featuring wage theft being exposed
+Including your coworker's affair revealed
+With the CEO's golden parachute discussed
+Featuring pizza instead of raises
+Including NDAs being signed under duress
+With mandatory unpaid overtime announced
+
+[CATALYSTS:SOCIAL MEDIA]
+A TikTok house collaboration
+An Instagram influencer meetup
+A YouTube channel milestone party
+A viral tweet anniversary celebration
+A podcast recording session
+A social media detox support group
+An NFT launch event
+A cryptocurrency conference
+A dating app match meetup
+A Reddit moderator convention
+
+[BOOSTERS:SOCIAL MEDIA]
+Going viral with 10M views
+Sponsored by Instagram
+Featured on the YouTube trending page
+With blue checkmarks everywhere
+Hosted by MrBeast
+Live streamed to 500k viewers
+With a brand deal announcement
+Trending #1 worldwide
+Featuring a TikTok dance challenge
+With influencer gifting suites
+
+[FUCKNOS:SOCIAL MEDIA]
+With your finsta being discovered
+Featuring your Reddit comment history exposed
+Including your YouTube search history revealed
+With your private Twitter ratio'd publicly
+Featuring your LinkedIn cringe on display
+Including your old Tumblr blog found
+With your Snapchat my eyes only leaked
+Featuring catfishing being revealed live
+Including doxxing happening in real-time
+With your parasocial relationships exposed
+
+[CATALYSTS:EDUCATION]
+A college acceptance reveal party
+A dissertation defense hearing
+A high school graduation ceremony
+A parent-teacher conference
+A school board meeting
+A student loan forgiveness announcement
+A university lecture on controversial topics
+A study abroad send-off party
+A scholarship award ceremony
+A school shooting drill
+
+[BOOSTERS:EDUCATION]
+Hosted at an Ivy League school
+With a full-ride scholarship on the line
+Broadcast on the school's Instagram
+Featuring a tenured professor speaking
+With student loan debt forgiveness
+Sponsored by Chegg and Course Hero
+With college admissions officers present
+Featured in the school newspaper
+Determining your final grade
+With your parents' tuition money
+
+[FUCKNOS:EDUCATION]
+With plagiarism accusations being proven
+Featuring a professor sleeping with students
+Including your terrible GPA revealed publicly
+With the school-to-prison pipeline on display
+Featuring active shooter protocols failing
+Including student debt amounts displayed
+With grade inflation scandals exposed
+Featuring your college essay read aloud
+Including admission bribery schemes revealed
+With teaching licenses being revoked
+
+[CATALYSTS:TRAVEL]
+An airport security checkpoint
+A cruise ship departure party
+A hotel check-in experience
+A passport renewal appointment
+A vacation timeshare presentation
+A guided tour of a foreign city
+A backpacking trip kickoff
+A luxury resort grand opening
+A travel blogger press trip
+An airline frequent flyer event
+
+[BOOSTERS:TRAVEL]
+Sponsored by Expedia
+Featured on Anthony Bourdain's show
+With TSA PreCheck for everyone
+Hosted by a travel influencer
+Broadcast from 30,000 feet
+With airline miles as prizes
+Featuring Rick Steves as tour guide
+Sponsored by Airbnb
+With all expenses paid
+Featured in Travel + Leisure
+
+[FUCKNOS:TRAVEL]
+With bed bugs in every room
+Featuring aggressive timeshare tactics
+Including lost luggage with your medication
+With TSA finding questionable items
+Featuring food poisoning from street vendors
+Including passport theft and identity fraud
+With a plane emergency landing
+Featuring Airbnb hidden cameras discovered
+Including tourist traps and scams
+With altitude sickness and explosive diarrhea
