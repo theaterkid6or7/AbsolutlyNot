@@ -1,62 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard – Absolutely Not</title>
+<title>Dashboard</title>
 <style>
 body {
-  background:#111;
+  background:#0e0e0e;
   color:white;
-  font-family:Arial;
+  font-family:system-ui;
   padding:20px;
+}
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.room {
+  font-size:28px;
+  font-weight:bold;
+}
+.board {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+  margin-top:30px;
 }
 .card {
-  border:2px solid white;
-  padding:20px;
-  margin:10px;
+  background:#181818;
+  border-radius:16px;
+  padding:25px;
+  min-height:200px;
 }
-.flex {
-  display:flex;
-  gap:20px;
+.card h2 {
+  opacity:.6;
+  font-size:18px;
+  margin-bottom:10px;
 }
-button {
-  padding:10px 20px;
-  margin-top:10px;
+.card p {
+  font-size:26px;
+}
+.submissions button {
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:15px;
+  font-size:18px;
+  cursor:pointer;
+}
+footer {
+  margin-top:30px;
 }
 </style>
 </head>
 <body>
 
-<h1>ABSOLUTELY NOT – DASHBOARD</h1>
+<header>
+  <h1>ABSOLUTELY NOT</h1>
+  <div class="room" id="roomCode">—</div>
+</header>
 
 <button onclick="createRoom()">Create Game</button>
-<h2 id="roomCode"></h2>
-
-<h3>Select Packs</h3>
-<label><input type="checkbox" value="BASE" checked> Base</label>
-<label><input type="checkbox" value="AI"> AI</label>
-<label><input type="checkbox" value="HOLIDAY"> Holiday</label>
-
-<br><br>
 <button onclick="startRound()">Start Round</button>
 
-<div class="flex">
+<div class="board">
   <div class="card">
-    <h2>Catalyst</h2>
-    <p id="catalyst"></p>
+    <h2>CATALYST</h2>
+    <p id="catalyst">—</p>
   </div>
   <div class="card">
-    <h2>Booster</h2>
-    <p id="booster"></p>
+    <h2>BOOSTER</h2>
+    <p id="booster">—</p>
   </div>
-  <div class="card">
-    <h2>Fuck No Submissions</h2>
+  <div class="card submissions">
+    <h2>FUCK NO</h2>
     <div id="subs"></div>
   </div>
 </div>
+
+<footer>
+  <p id="judge"></p>
+</footer>
 
 <script src="firebase.js"></script>
 <script src="dashboard.js"></script>
 </body>
 </html>
-
 
