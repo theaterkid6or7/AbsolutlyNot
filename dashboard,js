@@ -1,80 +1,64 @@
-let roomId = null;
+let roomId;
 let cards = { CATALYST:[], BOOSTER:[], FUCKNO:[] };
 
-fetch("cards.txt")
-.then(res => res.text())
-.then(text => parseCards(text));
+fetch("cards.txt").then(r=>r.text()).then(parseCards);
 
 function parseCards(text) {
   let current = null;
-  text.split("\n").forEach(line => {
-    line = line.trim();
-    if (!line) return;
-
-    if (line.startsWith("[")) {
-      current = line.replace("[","").replace("]","").split("|")[0];
-    } else {
-      cards[current].push(line);
-    }
+  text.split("\n").forEach(l=>{
+    l=l.trim();
+    if(!l) return;
+    if(l.startsWith("[")) current=l.split("|")[0].replace("[","");
+    else cards[current].push(l);
   });
 }
 
-function generateCode() {
-  return "ABNO-" + Math.random().toString(36).substring(2,6).toUpperCase();
-}
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
-function createRoom() {
-  roomId = generateCode();
-  document.getElementById("roomCode").innerText = "ROOM CODE: " + roomId;
-
-  const packs = [...document.querySelectorAll("input:checked")].map(e=>e.value);
-
+function createRoom(){
+  roomId="ABNO-"+Math.random().toString(36).substr(2,4).toUpperCase();
+  document.getElementById("roomCode").innerText="ROOM "+roomId;
   db.ref("rooms/"+roomId).set({
-    packs,
     judgeIndex:0,
-    state:"waiting",
-    players:{}
+    players:{},
+    round:{}
   });
 }
 
-function randomFrom(arr) {
-  return arr[Math.floor(Math.random()*arr.length)];
-}
-
-function startRound() {
-  const catalyst = randomFrom(cards.CATALYST);
-  const booster = randomFrom(cards.BOOSTER);
-
+function startRound(){
   db.ref("rooms/"+roomId+"/round").set({
-    catalyst,
-    booster,
+    catalyst: rand(cards.CATALYST),
+    booster: rand(cards.BOOSTER),
     submissions:{}
   });
-
-  document.getElementById("catalyst").innerText = catalyst;
-  document.getElementById("booster").innerText = booster;
 }
 
-db.ref("rooms").on("value", snap => {
-  if (!roomId) return;
-  const room = snap.val()[roomId];
-  if (!room || !room.round) return;
+db.ref("rooms").on("value", snap=>{
+  if(!roomId) return;
+  const room=snap.val()[roomId];
+  if(!room||!room.round) return;
 
-  const subs = room.round.submissions || {};
-  const div = document.getElementById("subs");
-  div.innerHTML = "";
+  document.getElementById("catalyst").innerText=room.round.catalyst||"—";
+  document.getElementById("booster").innerText=room.round.booster||"—";
 
-  Object.entries(subs).forEach(([pid,text])=>{
-    const btn = document.createElement("button");
-    btn.innerText = text;
-    btn.onclick = ()=>selectWinner(pid);
-    div.appendChild(btn);
+  const players=Object.values(room.players||{});
+  const judge=players[room.judgeIndex%players.length];
+  document.getElementById("judge").innerText=
+    judge ? `Judge: ${judge.name}` : "";
+
+  const subs=document.getElementById("subs");
+  subs.innerHTML="";
+  Object.entries(room.round.submissions||{}).forEach(([pid,text])=>{
+    const b=document.createElement("button");
+    b.innerText=text;
+    b.onclick=()=>pickWinner(pid);
+    subs.appendChild(b);
   });
 });
 
-function selectWinner(playerId) {
-  const ref = db.ref("rooms/"+roomId);
-  ref.child("players/"+playerId+"/score").transaction(s => (s||0)+2);
-  ref.child("judgeIndex").transaction(j => j+1);
-  alert("Winner selected!");
+function pickWinner(pid){
+  const ref=db.ref("rooms/"+roomId);
+  ref.child("players/"+pid+"/score").transaction(s=>(s||0)+2);
+  ref.child("judgeIndex").transaction(i=>i+1);
+  startRound();
 }
